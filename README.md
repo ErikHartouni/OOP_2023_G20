@@ -2,6 +2,6 @@
 members
 - Erik Hartouni 401102778
 - Ashkan Yousefnia 401102829
-- Ghazal Karbalai Saleh
+- Seyed Mohammad Sadegh Ahmadzadeh 401101098
 
 starting date: 2023/April/14

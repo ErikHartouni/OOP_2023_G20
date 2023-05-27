@@ -1,0 +1,8 @@
+package Controller;
+
+public enum InputType {
+    USER_CREATION, ADMIN_CREATION, USER_LOGIN, ADMIN_LOGIN, LOGOUT,SHOW_MY_RESTAURANTS,
+
+
+    END , INVALID_ORDER;
+}

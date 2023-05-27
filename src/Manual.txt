@@ -1,0 +1,9 @@
+only users can have restaurants!!
+the restaurant creation must be accepted by any of the admins
+
+ADD USER <USERNAME> <PASSWORD> ;
+ADD ADMIN <USERNAME> <PASSWORD> ;
+LOGIN USER <USERNAME> <PASSWORD> ;
+LOGIN ADMIN <USERNAME> <PASSWORD> ;
+LOGOUT ;
+SHOW MY RESTAURANTS ;

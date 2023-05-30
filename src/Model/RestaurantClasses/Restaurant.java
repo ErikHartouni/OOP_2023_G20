@@ -10,24 +10,28 @@ import java.util.ArrayList;
 public class Restaurant implements RestaurantActions {
     private String name;
     private User owner;
-    private ID id;
+    private ID restaurantID;
     private RestaurantType restaurantType;
     private ArrayList < Order > activeOrders;
 
 
-    public Restaurant(){
+    public Restaurant(String name , User owner , ID id , RestaurantType restaurantType){
+        this.restaurantID=id;
+        this.name=name ;
+        this.owner=owner;
+        this.restaurantType= restaurantType;
         this.activeOrders=new ArrayList<>();
     }
 
     @Override
     public String print() {
-        return this.name +" "+this.id.show();
-    }
+        return this.name +" "+this.restaurantID.show();
+    }//ended
 
     @Override
     public RestaurantType showRestaurantType() {
         return this.restaurantType;
-    }
+    }//ended
 
     @Override
     public Boolean canChangeRestaurantType() {
@@ -103,4 +107,6 @@ public class Restaurant implements RestaurantActions {
     public ArrayList<String> displayRating() {
         return null;
     }
+
+
 }

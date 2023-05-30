@@ -9,6 +9,7 @@ public interface FoodActions {
     String getName();
     void setDiscount(int discount);
     ArrayList<String> displayRating();//will give a string that will have number of every rating
+    String show();
 
 
 }

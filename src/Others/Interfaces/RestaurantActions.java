@@ -3,6 +3,7 @@ package Others.Interfaces;
 import Controller.InputAnalyzer;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Types.RestaurantType;
+import Model.Users.User;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ public interface RestaurantActions {
     Boolean doesFoodHaveDiscount(String id);//doesn't have to check the value of discount
     void discountFood(String id , Integer discount);
     ArrayList<String>displayRating();
-
 
 
 

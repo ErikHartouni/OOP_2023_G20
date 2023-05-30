@@ -1,5 +1,6 @@
 package View;
 
+import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
 import Others.Interfaces.EnumMassage;
 import View.Enums.Global.GlobalMassage;
@@ -17,7 +18,15 @@ public class ViewCenter {
                 for(E restaurant : list){
                     System.out.println(((Restaurant)restaurant).print());
                 }
+            }else if (list.get(0) instanceof Food){
+                for(E food : list){
+                    System.out.println(((Food)food).show());
+                }
             }
         }else cout(GlobalMassage.EMPTY);
+    }
+
+    public <T extends Exception> void cerr(T t){
+        System.out.println(t.toString());
     }
 }

@@ -3,21 +3,29 @@ package Model.Users;
 import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
+import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
-import Model.Users.UserClasses.CreditCard;
-import Model.Users.UserClasses.Massage;
 import Others.Interfaces.RestaurantOwnerActions;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User extends Person implements RestaurantOwnerActions {
     private ArrayList < Restaurant > myRestaurants;
-    private ID serID;
+    private HashMap<String , Integer> myRestaurantMap;
+    private ID userID;
     private int indexOfMyChosenRestaurant , indexOfMySelectedFood;
 
-    public User(String username , String password){
+    public User(String username , String password , ID id){
         this.username = username ;
         this.password = password;
+        this.userID=id;
+        myRestaurantMap = new HashMap<>();
+        myRestaurants = new ArrayList<>();
+    }
+    public Boolean doesHaveThisRestaurant(String name){
+        return myRestaurantMap.containsKey(name);
     }
 
 
@@ -27,9 +35,22 @@ public class User extends Person implements RestaurantOwnerActions {
     }
 
     @Override
-    public void createRestaurant(String name) {
+    public void createRestaurant(String name, User owner, ID id, RestaurantType restaurantType) {
+        /* create then add to restaurants
+        then user the createRestaurant(Restaurant) method ...*/
+        Restaurant restaurant = new Restaurant(name , owner , id , restaurantType);
+        this.createRestaurant(restaurant);
+    }//ended
+
+    @Override
+    public void createRestaurant(Restaurant restaurant) {//add to restaurants and restaurant map ...
 
     }
+    @Override
+    public void chooseRestaurant(String id) {
+
+    }
+
 
     @Override
     public RestaurantType showRestaurantType() {
@@ -67,7 +88,7 @@ public class User extends Person implements RestaurantOwnerActions {
     }
 
     @Override
-    public void editMyRestaurantFoodPrice(String id, Integer newPrise) {
+    public void editMyRestaurantFoodPrice(Integer newPrise) {
 
     }
 
@@ -77,7 +98,8 @@ public class User extends Person implements RestaurantOwnerActions {
     }
 
     @Override
-    public void addFoodToMyRestaurant(String name, Integer price) {
+    public void addFoodToMyRestaurant(String name, FoodType foodType , LocalTime time ,
+                                      Integer price , Integer discountRate , ID foodID) {
 
     }
 

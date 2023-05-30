@@ -17,13 +17,21 @@ public class InputAnalyzer {
         patternArrayList.add(Pattern.compile("^LOGIN\\s+ADMIN\\s+[!-z]+\\s+[!-z]+$"));
         patternArrayList.add(Pattern.compile("^LOGOUT$"));
         patternArrayList.add(Pattern.compile("^SHOW\\s+MY\\s+RESTAURANTS$"));//5
-        patternArrayList.add(Pattern.compile(""));
-        patternArrayList.add(Pattern.compile(""));
+        patternArrayList.add(Pattern.compile("^CREATE\\s+RESTAURANT\\s+[!-z]+\\s+[!-z]+$"));
+        patternArrayList.add(Pattern.compile("^SHOW\\s+MY\\s+RESTAURANTS$"));
+        patternArrayList.add(Pattern.compile("^CHOSE\\s+MY\\s+RESTAURANT\\s+[!-z]+$"));
+        patternArrayList.add(Pattern.compile("^SHOW\\s+MY\\s+FOODS$"));
+        patternArrayList.add(Pattern.compile("^CHOSE\\s+MY\\s+FOOD\\s+[!-z]+$"));//10
+        patternArrayList.add(Pattern.compile("^EDIT\\s+MY\\s+RESTAURANT\\s+TYPE\\s+TO\\s+[!-z]$"));
+        patternArrayList.add(Pattern.compile("^YES$"));
+        patternArrayList.add(Pattern.compile("^NO$"));
+        patternArrayList.add(Pattern.compile("^EDIT\\s+FOOD\\s+NAME\\s+[!-z]+$"));
+        patternArrayList.add(Pattern.compile("^ADD\\s+FOOD\\s+[!-z]+\\s+[0-9]+\\s+[!-z]+\\s+[0-9]+\\s+[0-9]+$"));//15
     }
     InputType analyze(String input){
         matcherArrayList.clear();
-        for(int i=0;i<patternArrayList.size();i++){
-            matcherArrayList.add(patternArrayList.get(i).matcher(input));
+        for (Pattern pattern : patternArrayList) {
+            matcherArrayList.add(pattern.matcher(input));
         }
         if(matcherArrayList.get(1).matches()){
             inputType = InputType.ADMIN_CREATION;
@@ -37,6 +45,26 @@ public class InputAnalyzer {
             inputType = InputType.LOGOUT;
         } else if (matcherArrayList.get(5).matches()){
             inputType = InputType.SHOW_MY_RESTAURANTS;
+        } else if (matcherArrayList.get(6).matches()) {
+            inputType = InputType.CREATE_RESTAURANT;
+        } else if(matcherArrayList.get(7).matches()){
+            inputType = InputType.SHOW_MY_FOODS;
+        }else if(matcherArrayList.get(8).matches()){
+            inputType = InputType.CHOSE_MY_RESTAURANT;
+        } else if (matcherArrayList.get(9).matches()) {
+            inputType = InputType.SHOW_MY_FOODS;
+        } else if (matcherArrayList.get(10).matches()) {
+            inputType = InputType.CHOSE_MY_FOOD;
+        } else if (matcherArrayList.get(11).matches()) {
+            inputType = InputType.EDIT_RESTAURANT_TYPE;
+        } else if (matcherArrayList.get(12).matches()) {
+            inputType = InputType.YES;
+        } else if (matcherArrayList.get(13).matches()) {
+            inputType = InputType.NO;
+        } else if (matcherArrayList.get(14).matches()) {
+            inputType = InputType.EDIT_FOOD_NAME;
+        } else if (matcherArrayList.get(15).matches()) {
+            inputType = InputType.ADD_FOOD;
         } else if (input.matches("^end$")) {
             inputType = InputType.END;
         } else {

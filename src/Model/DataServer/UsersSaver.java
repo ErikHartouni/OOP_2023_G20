@@ -1,5 +1,7 @@
 package Model.DataServer;
 
+import Model.DataServer.IDHandler.ID;
+import Model.DataServer.IDHandler.TypeOfID;
 import Model.Users.User;
 
 import java.util.ArrayList;
@@ -23,8 +25,8 @@ public class UsersSaver {
     public User giveUser(int index){
         return userArrayList.get(index);
     }
-    public void createUser(String username , String password){
-        userArrayList.add(new User(username,password));
+    public void createUser(String username , String password , ID id){
+        userArrayList.add(new User(username,password,id));
         userMap.put(username,numberOfUsers++);
     }
     public Boolean checkPassword(String username , String password){

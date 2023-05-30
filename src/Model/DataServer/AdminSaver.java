@@ -1,5 +1,6 @@
 package Model.DataServer;
 
+import Model.DataServer.IDHandler.ID;
 import Model.Users.Admin;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class AdminSaver {
             return adminMap.get(name);
         return -1;
     }
-    public void createAdmin(String name , String password){
-        admins.add(new Admin(name , password));
+    public void createAdmin(String name , String password , ID id ){
+        admins.add(new Admin(name , password , id));
         adminMap.put(name , numberOfAdmins++);
     }
     public Boolean checkPassword(String username , String password){

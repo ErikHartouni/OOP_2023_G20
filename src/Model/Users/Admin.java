@@ -15,6 +15,6 @@ public class Admin extends Person{//implements AdminActions {
 
     @Override
     public void editMyRestaurantFoodPrice(Integer newPrise) {
-        
+
     }
 }

@@ -5,5 +5,6 @@ public enum RestaurantType {
     Italian,
     FastFood,
     SeaFood,
+    MiddleEastern,
     MolecularGastronomy;
 }

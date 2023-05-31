@@ -1,9 +1,25 @@
 only users can have restaurants!!
 the restaurant creation must be accepted by any of the admins
+Restaurant types are:
+    1.Iranian
+    2.Italian
+    3.FastFood
+    4.SeaFood
+    5.MolecularGastronomy
+first chose restaurant then food to do whatever you are allowed to do
 
-ADD USER <USERNAME> <PASSWORD> ;
-ADD ADMIN <USERNAME> <PASSWORD> ;
-LOGIN USER <USERNAME> <PASSWORD> ;
-LOGIN ADMIN <USERNAME> <PASSWORD> ;
-LOGOUT ;
-SHOW MY RESTAURANTS ;
+Orders are:
+
+    ADD USER <USERNAME> <PASSWORD> ;
+    ADD ADMIN <USERNAME> <PASSWORD> ;
+    LOGIN USER <USERNAME> <PASSWORD> ;
+    LOGIN ADMIN <USERNAME> <PASSWORD> ;
+    LOGOUT ;
+    CREATE RESTAURANT <NAME> <RESTAURANT TYPE> ;
+    SHOW MY RESTAURANTS ;
+    CHOSE MY RESTAURANT <RESTAURANT ID> ;
+    SHOW MY FOODS ;
+    CHOSE MY FOOD <FOOD ID> ;
+    EDIT FOOD NAME TO <NEW FOOD NAME> ;
+    EDIT FOOD PRICE TO <PRICE> ;
+    ADD FOOD <FOOD NAME> <FOOD PRICE> <FOOD TYPE> <TIME TO MAKE> ; <mm ss>

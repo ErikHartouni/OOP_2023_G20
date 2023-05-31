@@ -1,7 +1,7 @@
 # OOP_2023_G20
 
 
-<p ><img align="right" width="120" src="sharif_logo.png"></p>
+<p ><img src="sharif_logo.png" align="right" width="120" ></p>
 
 
 This project is a code in `java.17` that provides a
@@ -51,6 +51,7 @@ In this Program you can be ether user , admin , poster. A User can do purchases 
 
         CHOSE MY RESTAURANT < RESTAURANT ID >
 6. Creating Food
+
     After you enter the restaurant menu, you can create your own foods
 
         ADD FOOD < FOOD NAME > < FOOD PRICE > < FOOD TYPE > < TIME TO MAKE >

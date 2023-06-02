@@ -35,6 +35,9 @@ public class Controller {
                 case EDIT_FOOD_NAME -> actionManager.editFoodName(string);
                 case EDIT_FOOD_PRICE -> actionManager.editFoodPrice(string);
                 case ADD_FOOD -> actionManager.addFood(string);
+                case DELETE_FOOD -> actionManager.deleteFood(string);
+                case DEACTIVATE_FOOD -> actionManager.deactivateFood(string);
+                case ACTIVATE_FOOD -> actionManager.activateFood(string);
                 case END -> actionManager.end();
                 case INVALID_ORDER -> actionManager.invalid();
             }

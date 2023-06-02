@@ -314,6 +314,51 @@ public class ActionManager {
         }return string.substring(i);
     }
 
+    public void deleteFood(String string) {
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(user != null){
+                if(onlinePlace==OnlinePlace.MY_RESTAURANT_MENU){
+                    orderPiece = string.split("\\s+");
+                    if(user.doesFoodExistInMyRestaurant(orderPiece[2])){
+                        if(user.canDeleteOrDeactivateFood(orderPiece[2])){
+                            user.deleteFood(orderPiece[2]);
+                            viewCenter.cout(FoodMassage.DELETED);
+                        }else viewCenter.cout(FoodMassage.CANNOT_DELETE);
+                    }else viewCenter.cout(RestaurantMassages.FOOD_NOT_FOUND);
+                }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+            }else viewCenter.cout(UserMassages.NOT_USER);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+
+    public void deactivateFood(String string) {
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(user != null){
+                if(onlinePlace==OnlinePlace.MY_RESTAURANT_MENU){
+                    orderPiece = string.split("\\s+");
+                    if(user.doesFoodExistInMyRestaurant(orderPiece[2])){
+                        if(user.canDeleteOrDeactivateFood(orderPiece[2])){
+                            user.deactivateFood(orderPiece[2]);
+                            viewCenter.cout(FoodMassage.DEACTIVATED);
+                        }else viewCenter.cout(FoodMassage.CANNOT_DEACTIVATE);
+                    }else viewCenter.cout(RestaurantMassages.FOOD_NOT_FOUND);
+                }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+            }else viewCenter.cout(UserMassages.NOT_USER);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+
+    public void activateFood(String string) {
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(user != null){
+                if(onlinePlace==OnlinePlace.MY_RESTAURANT_MENU){
+                    if(user.doesFoodExistInMyRestaurant(orderPiece[2])){
+                        orderPiece = string.split("\\s+");
+                        user.activateFood(orderPiece[2]);
+                        viewCenter.cout(FoodMassage.ACTIVATED);
+                    }else viewCenter.cout(RestaurantMassages.FOOD_NOT_FOUND);
+                }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+            }else viewCenter.cout(UserMassages.NOT_USER);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
 }
 
 /*

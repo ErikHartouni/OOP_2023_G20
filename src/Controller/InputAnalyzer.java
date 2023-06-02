@@ -27,6 +27,9 @@ public class InputAnalyzer {
         patternArrayList.add(Pattern.compile("^NO$"));
         patternArrayList.add(Pattern.compile("^EDIT\\s+FOOD\\s+NAME\\s+[!-z]+$"));
         patternArrayList.add(Pattern.compile("^ADD\\s+FOOD\\s+[!-z]+\\s+[0-9]+\\s+[!-z]+\\s+[0-9]+\\s+[0-9]+$"));//15
+        patternArrayList.add(Pattern.compile("^DELETE\\s+FOOD\\s+[A-z0-9]$"));
+        patternArrayList.add(Pattern.compile("^DEACTIVATE\\s+FOOD\\s+[A-z0-9]+$"));
+        patternArrayList.add(Pattern.compile("^ACTIVATE\\s+FOOD\\s+[A-z0-9]+$"));
     }
     InputType analyze(String input){
         matcherArrayList.clear();
@@ -65,6 +68,12 @@ public class InputAnalyzer {
             inputType = InputType.EDIT_FOOD_NAME;
         } else if (matcherArrayList.get(15).matches()) {
             inputType = InputType.ADD_FOOD;
+        } else if (matcherArrayList.get(16).matches()) {
+            inputType = InputType.DELETE_FOOD;
+        } else if (matcherArrayList.get(17).matches()) {
+            inputType = InputType.DEACTIVATE_FOOD;
+        } else if (matcherArrayList.get(18).matches()) {
+            inputType = InputType.ACTIVATE_FOOD;
         } else if (input.matches("^end$")) {
             inputType = InputType.END;
         } else {

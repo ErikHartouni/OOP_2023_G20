@@ -7,6 +7,7 @@ import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Others.Interfaces.RestaurantOwnerActions;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class User extends Person implements RestaurantOwnerActions {
     private HashMap<String , Integer> myRestaurantMap;
     private ID userID;
     private int indexOfMyChosenRestaurant , indexOfMySelectedFood;
+    private Restaurant myRestaurant;
 
     public User(String username , String password , ID id){
         this.username = username ;
@@ -124,14 +126,16 @@ public class User extends Person implements RestaurantOwnerActions {
     }
 
     @Override
-    public Boolean doesFoodHaveDiscount(String id) {
+    public Boolean doesFoodHaveDiscount() {
         return null;
     }
 
     @Override
-    public void discountFood(String id, Integer discount) {
-
+    public Boolean discountFood(Integer discount, LocalDateTime time) {
+        return null;
     }
+
+
 
     @Override
     public ArrayList<String> displayRating() {
@@ -145,6 +149,11 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public Boolean doesPasswordMatch(String password) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Restaurant> searchRestaurant(String restaurantName) {
         return null;
     }
 }

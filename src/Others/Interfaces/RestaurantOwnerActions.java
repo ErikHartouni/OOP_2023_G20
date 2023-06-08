@@ -7,6 +7,7 @@ import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.User;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -32,8 +33,10 @@ public interface RestaurantOwnerActions extends UserActions{
     void deleteFood(String id);
     void deactivateFood(String id);
     void activateFood(String id);
-    Boolean doesFoodHaveDiscount(String id);//doesn't have to check the value of discount
-    void discountFood(String id , Integer discount);
+    Boolean doesFoodHaveDiscount();//doesn't have to check the value of discount
+    Boolean discountFood( Integer discount , LocalDateTime time);//return true if it was done (check value of discount)
+
+
     ArrayList<String> displayRating();
     void back();
     

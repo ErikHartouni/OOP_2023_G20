@@ -13,6 +13,7 @@ public class Restaurant implements RestaurantActions {
     private ID restaurantID;
     private RestaurantType restaurantType;
     private ArrayList < Order > activeOrders;
+    private Food selectedFood;
 
 
     public Restaurant(String name , User owner , ID id , RestaurantType restaurantType){
@@ -21,6 +22,9 @@ public class Restaurant implements RestaurantActions {
         this.owner=owner;
         this.restaurantType= restaurantType;
         this.activeOrders=new ArrayList<>();
+    }
+    public String getName(){
+        return name;
     }
 
     @Override
@@ -105,6 +109,16 @@ public class Restaurant implements RestaurantActions {
 
     @Override
     public ArrayList<String> displayRating() {
+        return null;
+    }
+
+    @Override
+    public void selectFood(String id) {
+
+    }
+
+    @Override
+    public ArrayList<Comment> giveComments() {
         return null;
     }
 

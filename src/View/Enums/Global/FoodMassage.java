@@ -10,7 +10,10 @@ public enum FoodMassage implements EnumMassage {
     DEACTIVATED("food deactivated"),
     ACTIVATED("food activated"),
     CANNOT_DEACTIVATE("cannot deactivate food"),
-    CANNOT_DELETE("cannot delete food");
+    CANNOT_DELETE("cannot delete food"),
+    HAS_DISCOUNT("food has discount"),
+    SUCCESSFUL_DISCOUNT("discount created"),
+    NOT_SUCCESSFUL_DISCOUNT("discount must not exceed 50%.");
 
     final private String massage;
     FoodMassage(String massage){

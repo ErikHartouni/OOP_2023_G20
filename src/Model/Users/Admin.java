@@ -1,7 +1,10 @@
 package Model.Users;
 
 import Model.DataServer.IDHandler.ID;
+import Model.RestaurantClasses.Restaurant;
 import Others.Interfaces.AdminActions;
+
+import java.util.ArrayList;
 
 public class Admin extends Person{//implements AdminActions {
     private ID adminID;
@@ -13,8 +16,10 @@ public class Admin extends Person{//implements AdminActions {
         this.password=password;
     }
 
-    @Override
-    public void editMyRestaurantFoodPrice(Integer newPrise) {
 
+
+    @Override
+    public ArrayList<Restaurant> searchRestaurant(String restaurantName) {
+        return null;
     }
 }

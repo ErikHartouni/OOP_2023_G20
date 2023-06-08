@@ -1,6 +1,7 @@
 package Others.Interfaces;
 
 import Controller.InputAnalyzer;
+import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.User;
@@ -25,6 +26,8 @@ public interface RestaurantActions {
     Boolean doesFoodHaveDiscount(String id);//doesn't have to check the value of discount
     void discountFood(String id , Integer discount);
     ArrayList<String>displayRating();
+    void selectFood(String id);
+    ArrayList<Comment> giveComments();
 
 
 

@@ -9,6 +9,7 @@ import Model.RestaurantClasses.Restaurant;
 import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.Admin;
+import Model.Users.Person;
 import Model.Users.User;
 import Others.ErrorsAndExceptions.EnumValueMakingException;
 import View.Enums.Creation.PasswordCreationEnum;
@@ -25,10 +26,12 @@ import View.Enums.Logout.LogoutMassage;
 import View.ViewCenter;
 
 import javax.security.auth.login.LoginException;
+import java.text.Format;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class ActionManager {
     private ViewCenter viewCenter;
@@ -36,6 +39,7 @@ public class ActionManager {
     private String[] orderPiece;
     private  User user;
     private Admin admin;
+    private Restaurant outerRestaurant;
     private IDServer idServer;
     private BooleanManagingType booleanManagingType;
     private static UsersSaver usersData;
@@ -304,9 +308,6 @@ public class ActionManager {
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }
 
-
-
-    //private methods
     private String cutName(String string , int n){
         int i=0;
         for(int k=0;k<n;k++){
@@ -359,6 +360,69 @@ public class ActionManager {
             }else viewCenter.cout(UserMassages.NOT_USER);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }
+    public void discountFood(String string){
+        orderPiece = string.split("\\s+");
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(user != null){
+                if(onlinePlace==OnlinePlace.MY_FOOD_MENU){
+                    if(!user.doesFoodHaveDiscount()){
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:HH:mm:ss");
+                        LocalDateTime localDateTime = LocalDateTime.parse(orderPiece[3],formatter);
+                        if(user.discountFood(Integer.parseInt(orderPiece[2]),localDateTime)){
+                            viewCenter.cout(FoodMassage.SUCCESSFUL_DISCOUNT);
+                        }else viewCenter.cout(FoodMassage.NOT_SUCCESSFUL_DISCOUNT);
+                    }else viewCenter.cout(FoodMassage.HAS_DISCOUNT);
+                }else viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);
+            }else viewCenter.cout(UserMassages.NOT_USER);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+
+    public void searchRestaurant(String string){
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(onlinePlace==OnlinePlace.MAIN_MENU){
+                orderPiece=string.split("\\s+");
+                viewCenter.showArraylist(restaurantsData.searchRestaurant(orderPiece[2]));
+            }else viewCenter.cout(UserMassages.NOT_IN_MAIN_MENU);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+
+    public void selectRestaurant(String string) {
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            orderPiece=string.split("\\s+");
+            if(restaurantsData.doesRestaurantExist(orderPiece[2])){
+                outerRestaurant=restaurantsData.giveRestaurant(orderPiece[2]);
+                onlinePlace=OnlinePlace.OUT_RESTAURANT;
+                viewCenter.cout(RestaurantMassages.RESTAURANT_SELECTED);
+            }else viewCenter.cout(UserMassages.NO_RESTAURANT_FOUND);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+    public void showMenu(){
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(onlinePlace==OnlinePlace.OUT_RESTAURANT){
+                viewCenter.showArraylist(outerRestaurant.giveAllFoods());
+            }viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+    public void selectFood(String string){
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(onlinePlace==OnlinePlace.OUT_RESTAURANT){
+                orderPiece=string.split("\\s+");
+                if(outerRestaurant.doesFoodExist(orderPiece[2])){
+                    outerRestaurant.selectFood(orderPiece[2]);
+                    onlinePlace=OnlinePlace.OUT_FOOD_MENU;
+                    viewCenter.cout(RestaurantMassages.SELECT_FOOD);
+                }else viewCenter.cout(RestaurantMassages.FOOD_NOT_FOUND);
+            }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+    public void displayComments(){
+        if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            if(onlinePlace==OnlinePlace.OUT_FOOD_MENU){
+                viewCenter.showArraylist(outerRestaurant.giveComments());
+            }else viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);
+        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
+    }
+
 }
 
 /*

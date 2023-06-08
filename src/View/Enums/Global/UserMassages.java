@@ -14,7 +14,8 @@ public enum UserMassages implements EnumMassage {
     ACCEPT_RESTAURANT_TYPE_CHANGE("do you want to change your restaurant type? YES or NO"),
     CANNOT_CHANGE_RESTAURANT_TYPE("you cannot change your restaurant type"),
     ENTERED_MY_RESTAURANT("entered restaurant menu"),
-    FOOD_NAME_REPETITIOUS("food name already exists in this restaurant");
+    FOOD_NAME_REPETITIOUS("food name already exists in this restaurant"),
+    NO_SELECTED_RESTAURANT("you have not selected a restaurant yet");
 
     final private String massage;
     UserMassages(String massage){

@@ -30,6 +30,10 @@ public class InputAnalyzer {
         patternArrayList.add(Pattern.compile("^DELETE\\s+FOOD\\s+[A-z0-9]$"));
         patternArrayList.add(Pattern.compile("^DEACTIVATE\\s+FOOD\\s+[A-z0-9]+$"));
         patternArrayList.add(Pattern.compile("^ACTIVATE\\s+FOOD\\s+[A-z0-9]+$"));
+        patternArrayList.add(Pattern.compile("^ADD\\s+DISCOUNT\\s+[0-9]+\\s+[0-9]+:[0-9]+:[0-9]+:[0-9]+:$"));
+        patternArrayList.add(Pattern.compile("^SEARCH\\s+RESTAURANT\\s+[A-z]+$"));//20
+        patternArrayList.add(Pattern.compile("^SELECT\\s+RESTAURANT\\s+[!-Z]+$"));
+
     }
     InputType analyze(String input){
         matcherArrayList.clear();
@@ -74,6 +78,12 @@ public class InputAnalyzer {
             inputType = InputType.DEACTIVATE_FOOD;
         } else if (matcherArrayList.get(18).matches()) {
             inputType = InputType.ACTIVATE_FOOD;
+        } else if (matcherArrayList.get(19).matches()) {
+            inputType = InputType.DISCOUNT_FOOD;
+        } else if (matcherArrayList.get(20).matches()) {
+            inputType = InputType.SEARCH_RESTAURANT;
+        } else if (matcherArrayList.get(21).matches()) {
+            inputType = InputType.SELECT_RESTAURANT;
         } else if (input.matches("^end$")) {
             inputType = InputType.END;
         } else {

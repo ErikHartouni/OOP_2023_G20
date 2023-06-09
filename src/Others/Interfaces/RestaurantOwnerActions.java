@@ -18,7 +18,7 @@ public interface RestaurantOwnerActions extends UserActions{
     void chooseRestaurant(String id);//find and set restaurant . Do not check if there is no restaurant with this id
     RestaurantType showRestaurantType(); // use the same method in restaurant
     Boolean canChangeMyRestaurantType();//use the same method in restaurant
-    void editMyRestaurantFoodType(RestaurantType restaurantType);//use the same method in restaurant
+    void cahngeMyRestaurantType(RestaurantType restaurantType);//use the same method in restaurant
     ArrayList<Food> giveAllFoodsOfMyRestaurant();
     Boolean doesFoodExistInMyRestaurant(String id);//return true if exists
     void selectFood(String id);

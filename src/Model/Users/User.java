@@ -1,6 +1,7 @@
 package Model.Users;
 
 import Model.DataServer.IDHandler.ID;
+import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
 import Model.RestaurantClasses.Types.FoodType;
@@ -65,7 +66,7 @@ public class User extends Person implements RestaurantOwnerActions {
     }
 
     @Override
-    public void editMyRestaurantFoodType(RestaurantType restaurantType) {
+    public void cahngeMyRestaurantType(RestaurantType restaurantType) {
 
     }
 
@@ -155,5 +156,10 @@ public class User extends Person implements RestaurantOwnerActions {
     @Override
     public ArrayList<Restaurant> searchRestaurant(String restaurantName) {
         return null;
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+
     }
 }

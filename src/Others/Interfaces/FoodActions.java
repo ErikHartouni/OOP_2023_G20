@@ -1,5 +1,6 @@
 package Others.Interfaces;
 
+import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Comment;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public interface FoodActions {
     ArrayList<String> displayRating();//will give a string that will have number of every rating
     String show();
     ArrayList<Comment> giveComments();
+   void addComment(Comment comment);
 
 
 }

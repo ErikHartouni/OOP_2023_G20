@@ -58,6 +58,11 @@ public class Food implements FoodActions {
 
     @Override
     public ArrayList<Comment> giveComments() {
-        return null;
+        return comments;
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 }

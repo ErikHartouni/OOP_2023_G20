@@ -13,7 +13,7 @@ public class InputReceiver {
     public InputReceiver(Scanner scanner , Boolean shallContinue){
         this.scanner=scanner;
         this.shallContinue=shallContinue;
-        controller =new Controller();
+        controller =new Controller(this);
     }
 
     public void run(){
@@ -24,6 +24,12 @@ public class InputReceiver {
                 shallContinue=false;
             controller.manage(order);
         }
+    }
+    public String getYesOrNo(){
+        return scanner.nextLine();
+    }
+    public StringBuilder getComment(){
+        return new StringBuilder(scanner.nextLine());
     }
 
 }

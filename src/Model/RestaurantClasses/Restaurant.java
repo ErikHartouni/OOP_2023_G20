@@ -2,6 +2,7 @@ package Model.RestaurantClasses;
 
 import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Types.RestaurantType;
+import Model.Users.Person;
 import Model.Users.User;
 import Others.Interfaces.RestaurantActions;
 
@@ -119,7 +120,12 @@ public class Restaurant implements RestaurantActions {
 
     @Override
     public ArrayList<Comment> giveComments() {
-        return null;
+        return selectedFood.giveComments();
+    }
+
+    @Override
+    public void addComment(StringBuilder comment, ID id, Person sender) {
+        this.selectedFood.addComment(new Comment(comment,id,sender));
     }
 
 

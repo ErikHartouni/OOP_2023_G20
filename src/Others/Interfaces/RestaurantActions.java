@@ -1,10 +1,10 @@
 package Others.Interfaces;
 
-import Controller.InputAnalyzer;
+import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Types.RestaurantType;
-import Model.Users.User;
+import Model.Users.Person;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,5 @@ public interface RestaurantActions {
     ArrayList<String>displayRating();
     void selectFood(String id);
     ArrayList<Comment> giveComments();
-
-
-
+    void addComment(StringBuilder comment, ID id, Person sender);
 }

@@ -1,5 +1,6 @@
 package Model.Users;
 
+import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Restaurant;
 import Model.Users.UserClasses.CreditCard;
 import Model.Users.UserClasses.Massage;
@@ -16,6 +17,10 @@ public abstract class Person implements UserActions {
     @Override
     public ArrayList<Restaurant> searchRestaurant(String restaurantName) {
         return null;
+    }
+    @Override
+    public String sayMyName(){
+        return username;
     }
 
 

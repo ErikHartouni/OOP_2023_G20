@@ -13,7 +13,10 @@ public enum FoodMassage implements EnumMassage {
     CANNOT_DELETE("cannot delete food"),
     HAS_DISCOUNT("food has discount"),
     SUCCESSFUL_DISCOUNT("discount created"),
-    NOT_SUCCESSFUL_DISCOUNT("discount must not exceed 50%.");
+    NOT_SUCCESSFUL_DISCOUNT("discount must not exceed 50%."),
+    IS_OWNER("you cannot add a comment to your food!"),
+    ENTER_COMMENT("please enter your comment:\n\t"),
+    COMMENT_ADDED("comment added!");
 
     final private String massage;
     FoodMassage(String massage){

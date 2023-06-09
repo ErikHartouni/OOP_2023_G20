@@ -1,5 +1,6 @@
 package Model.MainBrain;
 
+import Controller.InputType;
 import Model.DataServer.AdminSaver;
 import Model.DataServer.IDHandler.IDServer;
 import Model.DataServer.IDHandler.TypeOfID;
@@ -9,7 +10,6 @@ import Model.RestaurantClasses.Restaurant;
 import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.Admin;
-import Model.Users.Person;
 import Model.Users.User;
 import Others.ErrorsAndExceptions.EnumValueMakingException;
 import View.Enums.Creation.PasswordCreationEnum;
@@ -23,15 +23,13 @@ import View.Enums.Login.LogeIn;
 import View.Enums.Login.PasswordLogin;
 import View.Enums.Login.UsernameLogin;
 import View.Enums.Logout.LogoutMassage;
+import View.InputReceiver;
 import View.ViewCenter;
 
-import javax.security.auth.login.LoginException;
-import java.text.Format;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class ActionManager {
     private ViewCenter viewCenter;
@@ -41,19 +39,20 @@ public class ActionManager {
     private Admin admin;
     private Restaurant outerRestaurant;
     private IDServer idServer;
-    private BooleanManagingType booleanManagingType;
     private static UsersSaver usersData;
     private static AdminSaver adminsData;
     private static RestaurantSaver restaurantsData;
-    private RestaurantType restaurantType;
+    private InputReceiver inputReceiver;
 
     //constructor
-    public ActionManager(){
+    public ActionManager(InputReceiver inputReceiver){
         viewCenter=new ViewCenter();
         usersData = new UsersSaver();
         adminsData = new AdminSaver();
+        restaurantsData = new RestaurantSaver();
         onlinePlace = OnlinePlace.LOGOUT_LOGIN_CREATION_MENU;
         idServer=new IDServer();
+        this.inputReceiver=inputReceiver;
     }
     //methods
     public void logout(){
@@ -230,35 +229,35 @@ public class ActionManager {
             } else viewCenter.cout(UserMassages.NOT_USER);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }
-    public Boolean editRestaurantType(String string){
-        if(onlinePlace != OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
-            if (user != null) {
-                if(onlinePlace == OnlinePlace.MY_RESTAURANT_MENU){
-                    if(this.user.canChangeMyRestaurantType()){
-                        try {
-                             restaurantType = RestaurantType.valueOf(orderPiece[3].toUpperCase());
-                             viewCenter.cout(UserMassages.ACCEPT_RESTAURANT_TYPE_CHANGE);
-                             booleanManagingType = BooleanManagingType.RESTAURANT_TYPE;
-                             return true;
-                        } catch (RuntimeException exception) {
-                            viewCenter.cout(UserMassages.INVALID_TYPE_OF_RESTAURANT);
-                        }
-                    }else viewCenter.cout(UserMassages.CANNOT_CHANGE_RESTAURANT_TYPE);
-                }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
-            }else viewCenter.cout(UserMassages.NOT_USER);
-        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
-        return false;
-    }
-    public void booleanManager(Boolean toDO){
-        switch (booleanManagingType){
-            case RESTAURANT_TYPE :
-                this.user.editMyRestaurantFoodType(this.restaurantType);
-                restaurantType = null;
-                viewCenter.cout(RestaurantMassages.TYPE_CHANGED);
-                break;
-
+    public void editRestaurantType(String string){
+        orderPiece= string.split("\\s+");
+        if(onlinePlace==OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;}
+        if(user==null){
+            viewCenter.cout(UserMassages.NOT_USER);return;}
+        if(onlinePlace!=OnlinePlace.MY_RESTAURANT_MENU){
+            viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);return;}
+        if (!user.canChangeMyRestaurantType()){
+            viewCenter.cout(UserMassages.CANNOT_CHANGE_RESTAURANT_TYPE);return;}
+        try{
+            RestaurantType restaurantType = RestaurantType.valueOf(orderPiece[5]);
+            viewCenter.cout(RestaurantMassages.ASK_TO_CHANGE_TYPE);
+            try{
+                InputType inputType = InputType.valueOf(inputReceiver.getYesOrNo().toUpperCase());
+                if(inputType==InputType.YES){
+                    user.cahngeMyRestaurantType(restaurantType);
+                    viewCenter.cout(RestaurantMassages.TYPE_CHANGED);
+                }
+            }catch (Exception e){
+                invalid();
+                editRestaurantType(string);
+            }
+        }catch (Exception e ){
+            viewCenter.cerr(e);
         }
+
     }
+
     public void editFoodName(String string){
         if(onlinePlace != OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             if(user != null){
@@ -422,6 +421,29 @@ public class ActionManager {
             }else viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }
+    public void addComment(){
+        if(onlinePlace==OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;
+        }if(onlinePlace==OnlinePlace.MY_FOOD_MENU){
+            viewCenter.cout(FoodMassage.IS_OWNER);return;
+        }if(onlinePlace!=OnlinePlace.OUT_FOOD_MENU){
+            viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);return;
+        }
+        viewCenter.cout(FoodMassage.ENTER_COMMENT);
+        do{
+            StringBuilder comment = inputReceiver.getComment();
+            if(comment.length()>1){
+                if(user!=null)
+                    this.outerRestaurant.addComment(comment,idServer.createID(TypeOfID.COMMENT),user);
+                if(admin!=null)
+                    this.outerRestaurant.addComment(comment,idServer.createID(TypeOfID.COMMENT),admin);
+                viewCenter.cout(FoodMassage.COMMENT_ADDED);
+                break;
+            }
+        }while(true);
+    }
+
+
 
 }
 

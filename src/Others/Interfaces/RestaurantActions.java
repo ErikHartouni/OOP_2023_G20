@@ -29,4 +29,11 @@ public interface RestaurantActions {
     void selectFood(String id);
     ArrayList<Comment> giveComments();
     void addComment(StringBuilder comment, ID id, Person sender);
+
+    Boolean doesCommentExist(String id);
+
+    Boolean canEditComment(String s);
+    Boolean isSender(Person person);
+
+    void editComment(String id, StringBuilder newComment);
 }

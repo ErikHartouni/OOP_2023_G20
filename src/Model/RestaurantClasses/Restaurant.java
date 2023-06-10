@@ -127,6 +127,21 @@ public class Restaurant implements RestaurantActions {
     public void addComment(StringBuilder comment, ID id, Person sender) {
         this.selectedFood.addComment(new Comment(comment,id,sender));
     }
+    @Override
+    public Boolean doesCommentExist(String id){
+        return null;
+    }
 
+    @Override
+    public Boolean canEditComment(String id) {
+        return null;
+    }
 
+    @Override
+    public Boolean isSender(Person person) {
+        return null;
+    }
+    @Override
+    public void editComment(String id, StringBuilder newComment) {
+    }
 }

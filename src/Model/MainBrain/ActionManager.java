@@ -424,7 +424,7 @@ public class ActionManager {
     public void addComment(){
         if(onlinePlace==OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;
-        }if(onlinePlace==OnlinePlace.MY_FOOD_MENU){
+        }if(onlinePlace==OnlinePlace.MY_FOOD_MENU){//check if user is not owner
             viewCenter.cout(FoodMassage.IS_OWNER);return;
         }if(onlinePlace!=OnlinePlace.OUT_FOOD_MENU){
             viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);return;
@@ -432,19 +432,44 @@ public class ActionManager {
         viewCenter.cout(FoodMassage.ENTER_COMMENT);
         do{
             StringBuilder comment = inputReceiver.getComment();
-            if(comment.length()>1){
+            if(comment.length()>10){
                 if(user!=null)
                     this.outerRestaurant.addComment(comment,idServer.createID(TypeOfID.COMMENT),user);
                 if(admin!=null)
                     this.outerRestaurant.addComment(comment,idServer.createID(TypeOfID.COMMENT),admin);
                 viewCenter.cout(FoodMassage.COMMENT_ADDED);
                 break;
-            }
+            }else viewCenter.cout(FoodMassage.COMMENT_LENGTH);
         }while(true);
     }
 
 
+    public void editComment(String string) {
+        orderPiece=string.split("\\s+");
+        if(onlinePlace==OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;
+        }if (onlinePlace!=OnlinePlace.OUT_FOOD_MENU){
+            viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);return;
+        }if(!this.outerRestaurant.doesCommentExist(orderPiece[2])){
+            viewCenter.cout(FoodMassage.COMMENT_NOT_FOUND);return;
+        }if(!this.outerRestaurant.canEditComment(orderPiece[2])){
+            viewCenter.cout(FoodMassage.COMMENT_LIMIT);return;
+        }viewCenter.cout(FoodMassage.ENTER_COMMENT);
+        do{
+            StringBuilder newComment = inputReceiver.getComment();
+            if(newComment.length()>10){
+                if(user!=null){
+                    if(this.outerRestaurant.isSender(user))
+                        this.outerRestaurant.editComment(orderPiece[2],newComment);break;
 
+                }else if(admin != null){
+                    if(this.outerRestaurant.isSender(admin))
+                        this.outerRestaurant.editComment(orderPiece[2],newComment);break;
+                }
+            }else viewCenter.cout(FoodMassage.COMMENT_LENGTH);
+        }while (true);
+        viewCenter.cout(FoodMassage.COMMENT_EDITED);
+    }
 }
 
 /*

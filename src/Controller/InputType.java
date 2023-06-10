@@ -32,7 +32,7 @@ public enum InputType {
     SELECT_FOOD(Pattern.compile("^SELECT\\s+FOOD\\s+[!-z]+$",Pattern.CASE_INSENSITIVE)),
     DISPLAY_COMMENTS(Pattern.compile("^DISPLAY\\s+COMMENTS$",Pattern.CASE_INSENSITIVE)),
     ADD_COMMENT(Pattern.compile("^ADD\\s+COMMENT$",Pattern.CASE_INSENSITIVE)),
-
+    EDIT_COMMENT(Pattern.compile("^EDIT\\s+COMMENT\\s+[!-z]+$",Pattern.CASE_INSENSITIVE)),
     END(Pattern.compile("^END$",Pattern.CASE_INSENSITIVE)) , INVALID_ORDER;
 
     InputType(){

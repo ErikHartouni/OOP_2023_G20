@@ -43,6 +43,7 @@ public class Controller {
             case SELECT_FOOD -> actionManager.selectFood(string);
             case DISPLAY_COMMENTS -> actionManager.displayComments();
             case ADD_COMMENT -> actionManager.addComment();
+            case EDIT_COMMENT -> actionManager.editComment(string);
             case END -> actionManager.end();
             case INVALID_ORDER -> actionManager.invalid();
         }

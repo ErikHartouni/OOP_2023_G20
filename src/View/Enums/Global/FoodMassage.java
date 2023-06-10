@@ -16,7 +16,11 @@ public enum FoodMassage implements EnumMassage {
     NOT_SUCCESSFUL_DISCOUNT("discount must not exceed 50%."),
     IS_OWNER("you cannot add a comment to your food!"),
     ENTER_COMMENT("please enter your comment:\n\t"),
-    COMMENT_ADDED("comment added!");
+    COMMENT_ADDED("comment added!"),
+    COMMENT_NOT_FOUND("comment doesn't exist!"),
+    COMMENT_EDITED("comment edited"),
+    COMMENT_LENGTH("comment size must be higher than 10 characters !"),
+    COMMENT_LIMIT("you can edit comment once !");
 
     final private String massage;
     FoodMassage(String massage){

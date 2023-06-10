@@ -10,7 +10,7 @@ restaurant managing system. Done in spring 2023 in
 [Electrical Engineering](https://www.ee.sharif.edu/en/) department.
 
 ## Manual
-The inputs that you give are case-sensitive.
+The inputs that you give are not case-sensitive.
 
 In this Program you can be ether user , admin , poster. A User can do purchases and have restaurants ; to make restaurant , the user must send a request to admin and the admin must answer it. After purchasing your foods, your food will take time to be made, and then a poster must get the food and bring it to the buyer.
 

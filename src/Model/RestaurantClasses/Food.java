@@ -2,6 +2,7 @@ package Model.RestaurantClasses;
 
 import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Types.FoodType;
+import Model.Users.Person;
 import Others.Interfaces.FoodActions;
 
 import java.time.LocalTime;
@@ -64,5 +65,23 @@ public class Food implements FoodActions {
     @Override
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    @Override
+    public Boolean doesCommentExist(String id) {
+        return null;
+    }
+
+    @Override
+    public Boolean canEditComment(String id) {
+        return null;
+    }
+
+    @Override
+    public Boolean isSender(Person person) {
+        return null;
+    }
+    @Override
+    public void editComment(String id, StringBuilder newComment) {
     }
 }

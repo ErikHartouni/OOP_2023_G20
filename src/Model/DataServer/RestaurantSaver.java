@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class RestaurantSaver implements RestaurantDataServerActions {
-    private ArrayList<Restaurant> restaurants;
+    private final ArrayList<Restaurant> restaurants;
     public RestaurantSaver(){
         restaurants= new ArrayList<>();
     }

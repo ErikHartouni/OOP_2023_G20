@@ -2,14 +2,16 @@ package Model.DataServer;
 
 import Model.DataServer.IDHandler.ID;
 import Model.Users.Admin;
+import Model.Users.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminSaver {
-    private ArrayList<Admin> admins;
-    private HashMap<String , Integer> adminMap;
+    private final ArrayList<Admin> admins;
+    private final HashMap<String , Integer> adminMap;
     private int numberOfAdmins;
+    private User user;
     public AdminSaver(){
         admins=new ArrayList<>();
         adminMap= new HashMap<>();

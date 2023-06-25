@@ -1,10 +1,9 @@
 package Model.DataServer.IDHandler;
 
-import Controller.InputType;
 
 public class ID {
-    private String code ;
-    private TypeOfID type;
+    private final String code ;
+    private final TypeOfID type;
 
     ID(int code , TypeOfID typeOfID){
         this .code = Integer.toHexString(code);

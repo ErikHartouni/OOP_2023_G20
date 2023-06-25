@@ -32,17 +32,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class ActionManager {
-    private ViewCenter viewCenter;
+    private final ViewCenter viewCenter;
     private OnlinePlace onlinePlace;
     private String[] orderPiece;
     private  User user;
     private Admin admin;
     private Restaurant outerRestaurant;
-    private IDServer idServer;
+    private final IDServer idServer;
     private static UsersSaver usersData;
     private static AdminSaver adminsData;
     private static RestaurantSaver restaurantsData;
-    private InputReceiver inputReceiver;
+    private final InputReceiver inputReceiver;
 
     //constructor
     public ActionManager(InputReceiver inputReceiver){
@@ -296,20 +296,19 @@ public class ActionManager {
                     orderPiece=string.split("\\s+");
                     try{
                         int price = Integer.parseInt(orderPiece[3]);
-                        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:mm:ss");
+                        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
                         LocalTime localTime = LocalTime.parse("0:"+orderPiece[5]+":"+orderPiece[6]);
                         FoodType foodType = FoodType.valueOf(orderPiece[4].toUpperCase());
+
                     }catch (NumberFormatException | DateTimeParseException | EnumValueMakingException e){viewCenter.cerr(e);}
-
-
                 }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
             }else viewCenter.cout(UserMassages.NOT_USER);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
-    }
+    }//still not codded...
 
     private String cutName(String string , int n){
         int i=0;
-        for(int k=0;k<n;k++){
+        for(int k = 0; k< n; k++){
             i = string.indexOf(" ",i+1);
         }return string.substring(i);
     }
@@ -458,26 +457,11 @@ public class ActionManager {
         do{
             StringBuilder newComment = inputReceiver.getComment();
             if(newComment.length()>10){
-                if(user!=null){
-                    if(this.outerRestaurant.isSender(user))
-                        this.outerRestaurant.editComment(orderPiece[2],newComment);break;
-
-                }else if(admin != null){
-                    if(this.outerRestaurant.isSender(admin))
-                        this.outerRestaurant.editComment(orderPiece[2],newComment);break;
+                if(admin!=null || user!=null){
+                    this.outerRestaurant.editComment(orderPiece[2],newComment);break;
                 }
             }else viewCenter.cout(FoodMassage.COMMENT_LENGTH);
         }while (true);
         viewCenter.cout(FoodMassage.COMMENT_EDITED);
     }
 }
-
-/*
-if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
-            if(user != null){
-                if(onlinePlace==OnlinePlace){
-
-                }else viewCenter.cout();
-            }else viewCenter.cout(UserMassages.NOT_USER);
-        }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
- */

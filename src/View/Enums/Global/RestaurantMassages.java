@@ -7,7 +7,9 @@ public enum RestaurantMassages implements EnumMassage {
     SELECT_FOOD("food selected"),
     TYPE_CHANGED("restaurant type changed"),
     RESTAURANT_SELECTED("restaurant selected"),
-    ASK_TO_CHANGE_TYPE("are you sure, you want to change restaurant type?");
+    ASK_TO_CHANGE_TYPE("are you sure, you want to change restaurant type?"),
+    BUIING_YOURSELF("you cannot buy goods from your own restaurant !"),
+    RATING_YOURSELF("you cannot rate your own restaurant !!");
 
     final private String massage;
     RestaurantMassages(String massage){

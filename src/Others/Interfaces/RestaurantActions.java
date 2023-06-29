@@ -3,6 +3,7 @@ package Others.Interfaces;
 import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
+import Model.RestaurantClasses.Rating;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.Person;
 
@@ -34,6 +35,9 @@ public interface RestaurantActions {
 
     Boolean canEditComment(String s);
     Boolean isSender(Person person);
+    void appendRating(Rating rating);
 
     void editComment(String id, StringBuilder newComment);
+
+    Food giveSelectedFood();
 }

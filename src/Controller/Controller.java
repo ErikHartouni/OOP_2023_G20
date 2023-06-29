@@ -44,6 +44,10 @@ public class Controller {
             case DISPLAY_COMMENTS -> actionManager.displayComments();
             case ADD_COMMENT -> actionManager.addComment();
             case EDIT_COMMENT -> actionManager.editComment(string);
+            case DISPLAY_RATING -> actionManager.displayRating();
+            case SUBMIT_RATING -> actionManager.submitRating(string);
+            case ADD_TO_CART -> actionManager.addThisFoodToCart();
+            case SHOW_CART -> actionManager.showMyCart();
             case END -> actionManager.end();
             case INVALID_ORDER -> actionManager.invalid();
         }

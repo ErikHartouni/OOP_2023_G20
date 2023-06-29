@@ -141,7 +141,17 @@ public class Restaurant implements RestaurantActions {
     public Boolean isSender(Person person) {
         return null;
     }
+
+    @Override
+    public void appendRating(Rating rating) {
+
+    }
+
     @Override
     public void editComment(String id, StringBuilder newComment) {
+    }
+    @Override
+    public Food giveSelectedFood(){
+        return this.selectedFood;
     }
 }

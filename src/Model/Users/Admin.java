@@ -15,6 +15,7 @@ public class Admin extends Person implements AdminActions {
         this.adminID = id;
         this.username=username;
         this.password=password;
+        super.isAdmin=true;
     }
 
 

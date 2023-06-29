@@ -20,7 +20,9 @@ public enum FoodMassage implements EnumMassage {
     COMMENT_NOT_FOUND("comment doesn't exist!"),
     COMMENT_EDITED("comment edited"),
     COMMENT_LENGTH("comment size must be higher than 10 characters !"),
-    COMMENT_LIMIT("you can edit comment once !");
+    BE_INSIDE("you must be inside food menu."),
+    COMMENT_LIMIT("you can edit comment once !"),
+    FOOD_ADDD_TO_CART("food was successfully added to cart");
 
     final private String massage;
     FoodMassage(String massage){

@@ -4,9 +4,11 @@ import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Rating;
+import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
 import Model.Users.Person;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public interface RestaurantActions {
@@ -20,6 +22,10 @@ public interface RestaurantActions {
     void editFoodPrice(String id , Integer newPrise);
     Boolean doesFoodNameExists(String name);
     void addFood(String name , Integer price);
+
+    void addFood(String name, Integer price, FoodType foodType,
+                 LocalTime time, Integer discountRate, ID foodID);
+
     Boolean canDeleteOrDeactivateFood(String id);
     void deleteFood(String id);
     void deactivateFood(String id);

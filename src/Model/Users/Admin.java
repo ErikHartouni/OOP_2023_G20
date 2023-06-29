@@ -16,6 +16,7 @@ public class Admin extends Person implements AdminActions {
         this.username=username;
         this.password=password;
         super.isAdmin=true;
+        super.isPoster=false;
     }
 
 

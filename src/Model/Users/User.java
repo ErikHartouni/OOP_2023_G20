@@ -15,7 +15,6 @@ import java.util.HashMap;
 
 public class User extends Person implements RestaurantOwnerActions {
     private ArrayList < Restaurant > myRestaurants;
-    private HashMap<String , Integer> myRestaurantMap;
     private ID userID;
     private int indexOfMyChosenRestaurant , indexOfMySelectedFood;
     private Restaurant myRestaurant;
@@ -24,17 +23,21 @@ public class User extends Person implements RestaurantOwnerActions {
         this.username = username ;
         this.password = password;
         this.userID=id;
-        myRestaurantMap = new HashMap<>();
+        super.isAdmin=false;
+        super.isPoster=false;
         myRestaurants = new ArrayList<>();
     }
-    public Boolean doesHaveThisRestaurant(String name){
-        return myRestaurantMap.containsKey(name);
+    public Boolean doesHaveThisRestaurant(String id){
+        for(Restaurant restaurant:myRestaurants){
+            if(restaurant.giveID().equals(id))
+                return true;
+        }return false;
     }
 
 
     @Override
     public ArrayList<Restaurant> giveMyRestaurants() {
-        return null;
+        return this.myRestaurants;
     }
 
     @Override
@@ -47,11 +50,14 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public void createRestaurant(Restaurant restaurant) {//add to restaurants and restaurant map ...
-
+        this.myRestaurants.add(restaurant);
     }
     @Override
     public void chooseRestaurant(String id) {
-
+        for(Restaurant restaurant : myRestaurants){
+            if(restaurant.giveID().equals(id)){
+                this.myRestaurant=restaurant; break;}
+        }
     }
 
 
@@ -62,7 +68,7 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public Boolean canChangeMyRestaurantType() {
-        return null;
+        return this.myRestaurant.canChangeRestaurantType();
     }
 
     @Override
@@ -72,12 +78,12 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public ArrayList<Food> giveAllFoodsOfMyRestaurant() {
-        return null;
+        return this.myRestaurant.giveAllFoods();
     }
 
     @Override
     public Boolean doesFoodExistInMyRestaurant(String id) {
-        return null;
+        return this.myRestaurant.doesFoodExist(id);
     }
 
     @Override
@@ -97,13 +103,13 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public Boolean doesFoodNameExistsInMyRestaurant(String name) {
-        return null;
+        return this.myRestaurant.doesFoodNameExists(name);
     }
 
     @Override
     public void addFoodToMyRestaurant(String name, FoodType foodType , LocalTime time ,
                                       Integer price , Integer discountRate , ID foodID) {
-
+        this.myRestaurant.addFood(name ,price,foodType,time,discountRate,foodID);
     }
 
     @Override
@@ -150,7 +156,7 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public Boolean doesPasswordMatch(String password) {
-        return null;
+        return password.equals(this.password);
     }
 
     @Override

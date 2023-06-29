@@ -17,7 +17,6 @@ public class Controller {
         return InputType.INVALID_ORDER;
     }
     public void manage(String string){
-
         switch (analyzeInput(string)) {
             case USER_CREATION -> actionManager.createUser(string);
             case ADMIN_CREATION -> actionManager.createAdmin(string);
@@ -48,6 +47,7 @@ public class Controller {
             case SUBMIT_RATING -> actionManager.submitRating(string);
             case ADD_TO_CART -> actionManager.addThisFoodToCart();
             case SHOW_CART -> actionManager.showMyCart();
+            case BACK -> actionManager.back();
             case END -> actionManager.end();
             case INVALID_ORDER -> actionManager.invalid();
         }

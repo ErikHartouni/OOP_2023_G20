@@ -40,6 +40,8 @@ public abstract class Person implements UserActions {
 
     }
     public ArrayList<Food> getFoodOfCart(){
-
+        return null;
     }
+
+
 }

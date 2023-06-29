@@ -9,6 +9,8 @@ public enum RestaurantMassages implements EnumMassage {
     RESTAURANT_SELECTED("restaurant selected"),
     ASK_TO_CHANGE_TYPE("are you sure, you want to change restaurant type?"),
     BUIING_YOURSELF("you cannot buy goods from your own restaurant !"),
+    RESTAURANT_CREATED("restaurant created"),
+    FOOD_ADDED("food added"),
     RATING_YOURSELF("you cannot rate your own restaurant !!");
 
     final private String massage;

@@ -34,6 +34,7 @@ import java.time.format.DateTimeParseException;
 
 public class ActionManager {
     private final ViewCenter viewCenter;
+    private String myRestaurantId;
     private OnlinePlace onlinePlace;
     private String[] orderPiece;
     private Person person;
@@ -169,11 +170,12 @@ public class ActionManager {
                 if (person.isUser()) {
                     RestaurantType restaurantType;
                     try {
-                        restaurantType = RestaurantType.valueOf(orderPiece[3].toUpperCase());
+                        restaurantType = RestaurantType.valueOf(orderPiece[3]);
                         if (!((User)person).doesHaveThisRestaurant(orderPiece[2])) {
                             Restaurant newRestaurant = new Restaurant(orderPiece[2], ((User)person), idServer.createID(TypeOfID.RESTAURANT), restaurantType);
                             ((User)person).createRestaurant(newRestaurant);
                             restaurantsData.addRestaurant(newRestaurant);
+                            viewCenter.cout(RestaurantMassages.RESTAURANT_CREATED);
                         } else viewCenter.cout(UserMassages.USER_HAS_THIS_RESTAURANT);
                     } catch (RuntimeException exception) {
                         viewCenter.cout(UserMassages.INVALID_TYPE_OF_RESTAURANT);
@@ -185,7 +187,7 @@ public class ActionManager {
     public void showMyRestaurants(){
         if(onlinePlace != OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             if (onlinePlace == OnlinePlace.MAIN_MENU) {
-                if (((User)person) != null) {
+                if (person.isUser()) {
                     viewCenter.showArraylist(((User)person).giveMyRestaurants());
                 } else viewCenter.cout(UserMassages.NOT_USER);
             } else viewCenter.cout(UserMassages.NOT_IN_MAIN_MENU);
@@ -236,7 +238,7 @@ public class ActionManager {
             viewCenter.cout(UserMassages.NOT_USER);return;}
         if(onlinePlace!=OnlinePlace.MY_RESTAURANT_MENU){
             viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);return;}
-        if (((User)person).canChangeMyRestaurantType()){
+        if (!((User)person).canChangeMyRestaurantType()){
             viewCenter.cout(UserMassages.CANNOT_CHANGE_RESTAURANT_TYPE);return;}
         try{
             RestaurantType restaurantType = RestaurantType.valueOf(orderPiece[5]);
@@ -262,8 +264,8 @@ public class ActionManager {
             if(person.isUser()){
                 if(onlinePlace == OnlinePlace.MY_FOOD_MENU){
                     orderPiece = string.split("\\s+");
-                    if(!((User)person).doesFoodNameExistsInMyRestaurant(cutName(string,4))){
-                        ((User)person).editMyRestaurantFoodName(cutName(string , 4));
+                    if(!((User)person).doesFoodNameExistsInMyRestaurant(orderPiece[3])){
+                        ((User)person).editMyRestaurantFoodName(orderPiece[3]);
                         viewCenter.cout(FoodMassage.FOOD_NAME_CHANGED);
                     }else viewCenter.cout(UserMassages.FOOD_NAME_REPETITIOUS);
                 }else viewCenter.cout(UserMassages.NOT_IN_FOOD_MENU);
@@ -276,7 +278,7 @@ public class ActionManager {
                 if(onlinePlace == OnlinePlace.MY_FOOD_MENU){
                     orderPiece = string.split("\\s+");
                     try{
-                        int newPrice = Integer.parseInt(orderPiece[4]);
+                        int newPrice = Integer.parseInt(orderPiece[3]);
                         if(newPrice>0){
                             ((User)person).editMyRestaurantFoodPrice(newPrice);
                             viewCenter.cout(FoodMassage.PRICE_CHANGED);
@@ -295,10 +297,12 @@ public class ActionManager {
                     orderPiece=string.split("\\s+");
                     try{
                         int price = Integer.parseInt(orderPiece[3]);
-                        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-                        LocalTime localTime = LocalTime.parse("0:"+orderPiece[5]+":"+orderPiece[6]);
-                        FoodType foodType = FoodType.valueOf(orderPiece[4].toUpperCase());
-
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        LocalTime localTime = LocalTime.parse("00:"+orderPiece[5]+":"+orderPiece[6]);
+                        FoodType foodType = FoodType.valueOf(orderPiece[4]);
+                        ((User)person).addFoodToMyRestaurant(orderPiece[2],foodType,
+                                localTime,price,0,this.idServer.createID(TypeOfID.FOOD));
+                        viewCenter.cout(RestaurantMassages.FOOD_ADDED);
                     }catch (NumberFormatException | DateTimeParseException | EnumValueMakingException e){viewCenter.cerr(e);}
                 }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
             }else viewCenter.cout(UserMassages.NOT_USER);
@@ -490,5 +494,16 @@ public class ActionManager {
         if (onlinePlace== OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;}
         viewCenter.showArraylist(person.getFoodOfCart());
+    }
+    public void back(){
+        if(onlinePlace==OnlinePlace.OUT_FOOD_MENU){
+            onlinePlace=OnlinePlace.MAIN_MENU;
+        }else if(onlinePlace==OnlinePlace.MY_FOOD_MENU){
+            onlinePlace=OnlinePlace.MY_RESTAURANT_MENU;
+        }else if(onlinePlace==OnlinePlace.MY_RESTAURANT_MENU){
+            onlinePlace=OnlinePlace.MAIN_MENU;
+        }else if(onlinePlace==OnlinePlace.OUT_RESTAURANT){
+            onlinePlace=OnlinePlace.MAIN_MENU;
+        }
     }
 }

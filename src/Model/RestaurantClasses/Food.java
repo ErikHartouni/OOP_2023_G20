@@ -22,6 +22,9 @@ public class Food implements FoodActions {
         this.discountRate = discountRate ; this.foodID = foodID;
     }
 
+    public Food(Food food) {
+    }
+
     @Override
     public void activate() {
 
@@ -29,17 +32,17 @@ public class Food implements FoodActions {
 
     @Override
     public void deactivate() {
-
+        this.activation=false;
     }
 
     @Override
     public Boolean doesHaveDiscount() {
-        return null;
+        return this.discount;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.foodName;
     }
 
     @Override
@@ -54,7 +57,8 @@ public class Food implements FoodActions {
 
     @Override
     public String show() {
-        return this.foodName+" id:"+this.foodID+" price:"+this.price.toString()+"$ off:"+this.discountRate.toString()+"%";
+        return this.foodName+" id:"+this.foodID.show()+" price:"+this.price.toString()+"$ off:"+
+                this.discountRate.toString()+"% ";//remember to print activation...
     }
 
     @Override
@@ -84,4 +88,15 @@ public class Food implements FoodActions {
     @Override
     public void editComment(String id, StringBuilder newComment) {
     }
+    public String getID(){
+        return foodID.show();
+    }
+    public void editFoodName(String foodName){
+        this.foodName=foodName;
+    }
+
+    public void editPrice(Integer newPrise) {
+        this.price=newPrise;
+    }
+
 }

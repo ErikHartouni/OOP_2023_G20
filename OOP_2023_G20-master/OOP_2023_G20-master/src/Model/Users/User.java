@@ -402,12 +402,17 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public void back() {
-        if (this.indexOfMySelectedFood!=-1)
+        if (this.indexOfMySelectedFood!=-1) {
             this.indexOfMySelectedFood=-1;
-        else if (this.indexOfMyChosenRestaurant!=-1)
+            this.giveMyRestaurants();
+        }
+        else if (this.indexOfMyChosenRestaurant!=-1) {
             this.indexOfMyChosenRestaurant=-1;
-        else if (this.isInCreditCard)
+            this.giveAllFoodsOfMyRestaurant();
+        }
+        else if (this.isInCreditCard) {
             this.isInCreditCard=false;
+        }
     }
 
 

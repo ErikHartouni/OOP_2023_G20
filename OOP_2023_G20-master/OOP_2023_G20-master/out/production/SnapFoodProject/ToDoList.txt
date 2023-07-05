@@ -1,0 +1,16 @@
+SQL
+levels of checking:
+    logged-in
+    user
+
+
+*** remember that the user have 2 rests and 2 foods , so you don't need to check if he/she is owner or not!!
+****remember to check the cutString(.) methode
+*make EnumValueMakingException exception
+*check every methode
+    these methods are checked:
+        ADD USER <USERNAME> <PASSWORD> ;
+        ADD ADMIN <USERNAME> <PASSWORD> ;
+        LOGIN USER <USERNAME> <PASSWORD> ;
+        LOGIN ADMIN <USERNAME> <PASSWORD> ;
+        LOGOUT ;

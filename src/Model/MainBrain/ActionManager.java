@@ -1,11 +1,9 @@
 package Model.MainBrain;
 
 import Controller.InputType;
-import Model.DataServer.AdminSaver;
+import Model.DataServer.*;
 import Model.DataServer.IDHandler.IDServer;
 import Model.DataServer.IDHandler.TypeOfID;
-import Model.DataServer.RestaurantSaver;
-import Model.DataServer.UsersSaver;
 import Model.RestaurantClasses.Rating;
 import Model.RestaurantClasses.Restaurant;
 import Model.RestaurantClasses.Types.FoodType;
@@ -43,18 +41,57 @@ public class ActionManager {
     private static UsersSaver usersData;
     private static AdminSaver adminsData;
     private static RestaurantSaver restaurantsData;
+    private static MassageServer massageServer;
+    private static RatingServer ratingServer;
+    private static LocationServer locationServer;
+    private static FoodServer foodServer;
+    private static CommentServer commentServer;
     private final InputReceiver inputReceiver;
+
+    public static void loadInformation(){
+        ratingServer=new RatingServer();//
+        locationServer=new LocationServer();//
+        foodServer=new FoodServer();//
+        commentServer=new CommentServer();//
+        massageServer=new MassageServer();//
+        usersData = new UsersSaver();//
+        adminsData = new AdminSaver();//
+        restaurantsData = new RestaurantSaver();//
+        //now load the information
+        ratingServer.load();
+        commentServer.load();
+        foodServer.load();
+        usersData.getItems();
+        restaurantsData.load();
+        massageServer.load();
+        locationServer.getFile();
+        adminsData.load();
+        //now put the information in it's right place
+        usersData.giveMessages(massageServer.give());
+        adminsData.giveMessages(massageServer.give());
+        foodServer.setCommentsAndRatings(ratingServer.give(),commentServer.give());
+        restaurantsData.giveFoods(foodServer.give());
+        usersData.giveMyRestaurants(restaurantsData.give());
+    }
 
     //constructor
     public ActionManager(InputReceiver inputReceiver){
         viewCenter=new ViewCenter();
-        usersData = new UsersSaver();
-        adminsData = new AdminSaver();
-        restaurantsData = new RestaurantSaver();
         onlinePlace = OnlinePlace.LOGOUT_LOGIN_CREATION_MENU;
         idServer=new IDServer();
         this.inputReceiver=inputReceiver;
     }
+
+    public static void saveInformation() {
+        ratingServer.save();
+        commentServer.save();
+        foodServer.save();
+        usersData.save();
+        restaurantsData.save();
+        massageServer.save();
+        adminsData.save();
+    }
+
     //methods
     public void logout(){
         if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
@@ -400,7 +437,7 @@ public class ActionManager {
     public void showMenu(){
         if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             if(onlinePlace==OnlinePlace.OUT_RESTAURANT){
-                viewCenter.showArraylist(outerRestaurant.giveAllFoods());
+                viewCenter.showArraylist(outerRestaurant.giveFoodsForUser());
             }viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }

@@ -15,14 +15,19 @@ import java.util.HashMap;
 
 public class User extends Person implements RestaurantOwnerActions {
     private ArrayList < Restaurant > myRestaurants;
-    private ID userID;
     private int indexOfMyChosenRestaurant , indexOfMySelectedFood;
     private Restaurant myRestaurant;
+    public User(String userName , String passWord , String id , int credit , String message , String cart , String myRestaurant){
+        System.out.println(userName+passWord+id+credit);
+        this.username=userName;
+        this.password=passWord;
+
+    }
 
     public User(String username , String password , ID id){
         this.username = username ;
         this.password = password;
-        this.userID=id;
+        this.id=id;
         super.isAdmin=false;
         super.isPoster=false;
         myRestaurants = new ArrayList<>();
@@ -114,12 +119,12 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public Boolean canDeleteOrDeactivateFood(String id) {
-        return null;
+        return this.myRestaurant.canDeleteOrDeactivateFood(id);
     }
 
     @Override
     public void deleteFood(String id) {
-
+        this.myRestaurant.deleteFood(id);
     }
 
     @Override
@@ -167,5 +172,9 @@ public class User extends Person implements RestaurantOwnerActions {
     @Override
     public void addComment(Comment comment) {
 
+    }
+
+    public String giveMrRestaurantID() {
+        return "";
     }
 }

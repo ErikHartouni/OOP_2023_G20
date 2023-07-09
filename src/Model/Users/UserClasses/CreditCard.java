@@ -5,5 +5,8 @@ public class CreditCard {
     public CreditCard(int money){
         this.money=money;
     }
+    public int giveMoney(){
+        return this.money;
+    }
 
 }

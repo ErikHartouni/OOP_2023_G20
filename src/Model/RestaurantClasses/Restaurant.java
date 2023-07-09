@@ -11,25 +11,30 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Restaurant implements RestaurantActions {
+    private int numberOfGraph;
     private String name;
-    private User owner;
-    private ID restaurantID;
+    private ID restaurantID , ownerID;
     private RestaurantType restaurantType;
     private ArrayList < Order > activeOrders;
     private ArrayList <Food> foods;
     private Food selectedFood;
 
+    public Restaurant(String name , String id , String ownerID , String type , String foods){
 
+    }
     public Restaurant(String name , User owner , ID id , RestaurantType restaurantType){
         this.restaurantID=id;
         this.name=name ;
-        this.owner=owner;
+        this.ownerID=owner.giveID();
         this.restaurantType= restaurantType;
         this.activeOrders=new ArrayList<>();
         this.foods=new ArrayList<>();
     }
     public String getName(){
         return name;
+    }
+    public Boolean isOwner(ID id){
+        return id.equals(ownerID);
     }
 
     @Override
@@ -60,6 +65,13 @@ public class Restaurant implements RestaurantActions {
     @Override
     public ArrayList<Food> giveAllFoods() {
         return foods;
+    }
+    public ArrayList<Food> giveFoodsForUser(){
+        ArrayList<Food> ans = new ArrayList<>();
+        for(Food food:foods){
+            if(food.isActive())
+                ans.add(food);
+        }return ans;
     }
 
     @Override
@@ -111,9 +123,13 @@ public class Restaurant implements RestaurantActions {
     @Override
     public Boolean canDeleteOrDeactivateFood(String id) {
         for(Food food : foods){
-            if(food.getID().equals(id))
-                return food.canBeDeletedOrDeactivated();
-        }return false;//never happens
+            if(food.getID().equals(id)){
+                for(Order  order : activeOrders){
+                    if(order.contains(food))
+                        return false;
+                }
+            }
+        }return true;
     }
 
     @Override
@@ -122,7 +138,8 @@ public class Restaurant implements RestaurantActions {
         for (int i=0; i < this.foods.size() ;i++){
             if (this.foods.get(i).getID().equals(id)) {
                 index=i;break;}
-        }for(int i=index;i<foods.size()-1;i++){
+        }foods.remove(index);
+        for(int i=index;i<foods.size()-1;i++){
             foods.add(i,new Food(foods.get(i+1)));
         }
 
@@ -210,5 +227,14 @@ public class Restaurant implements RestaurantActions {
     public Food giveSelectedFood(){
         return this.selectedFood;
     }
+    public String giveOwnerID(){
+        return this.ownerID.show();
+    }public String giveType(){
+        return this.restaurantType.name();
+    }public String giveFoodsID(){
+        return null;
+    }
 
+    public void addFood(Food food) {
+    }
 }

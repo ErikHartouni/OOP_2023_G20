@@ -13,16 +13,26 @@ public class Food implements FoodActions {
     private String foodName;
     private LocalTime timeToMake;
     private Integer price, G , M , B , VB , discountRate; //G: good , VB : very bad
-    private ID foodID;
+    private ID foodID , restaurantID;
     private Boolean discount, activation;//true if active
     private ArrayList<Comment> comments;
-
+    private ArrayList<Rating>ratings;
     public Food(String name, FoodType foodType , LocalTime time , Integer price , Integer discountRate , ID foodID){
         this.foodName = name ; this.foodType=foodType ; this.timeToMake = time ; this.price = price;
-        this.discountRate = discountRate ; this.foodID = foodID;
+        this.discountRate = discountRate ; this.foodID = foodID;this.activation=true;
     }
 
     public Food(Food food) {
+    }
+
+    public Food(String fName, String fType, String id, int discount, int price, String ttm) {
+    }
+    public void rate(int i){
+
+    }
+
+    public Boolean isActive(){
+        return activation;
     }
 
     @Override
@@ -98,5 +108,22 @@ public class Food implements FoodActions {
     public void editPrice(Integer newPrise) {
         this.price=newPrise;
     }
+    public String getType(){
+        return this.foodType.toString();
+    }
 
+    public int getDiscount() {
+        return this.discountRate;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
+    public String getTTM() {
+        return this.timeToMake.toString();
+    }
+    public Boolean isInThisRestaurant(String id){
+        return id.equals(restaurantID.show());
+    }
 }

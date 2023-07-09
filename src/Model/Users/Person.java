@@ -1,5 +1,6 @@
 package Model.Users;
 
+import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
@@ -10,11 +11,13 @@ import Others.Interfaces.UserActions;
 import java.util.ArrayList;
 
 public abstract class Person implements UserActions {
+    private int numberOfGraph;
     protected String username , password;
     protected CreditCard creditCard;
     protected ArrayList<Massage> massages;
     protected ArrayList<Food> cart;
     protected Boolean isAdmin , isPoster;
+    protected ID id;
 
 
     @Override
@@ -41,6 +44,27 @@ public abstract class Person implements UserActions {
     }
     public ArrayList<Food> getFoodOfCart(){
         return null;
+    }
+    public ID giveID(){
+        return this.id;
+    }
+    public String giveName(){
+        return username;
+    }
+    public String givePass(){
+        return password;
+    }
+    public int giveCart(){
+        return this.creditCard.giveMoney();
+    }
+    public String giveMessages(){
+        return null;
+    }
+    public String giveByuCart(){
+        return null;
+    }
+    public void getMessageFromServer(Massage massage){
+        massages.add(massage);
     }
 
 

@@ -8,17 +8,19 @@ import Others.Interfaces.AdminActions;
 import java.util.ArrayList;
 
 public class Admin extends Person implements AdminActions {
-    private ID adminID;
 
 
     public Admin(String username , String password , ID id){
-        this.adminID = id;
+        this.id = id;
         this.username=username;
         this.password=password;
         super.isAdmin=true;
         super.isPoster=false;
     }
 
+    public Admin(String userName, String thePassWord, String id, int creditCard, String massages, String cart) {
+
+    }
 
 
     @Override

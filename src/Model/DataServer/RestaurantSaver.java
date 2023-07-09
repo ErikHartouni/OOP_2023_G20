@@ -1,16 +1,39 @@
 package Model.DataServer;
 
+import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
+import Model.Users.User;
 import Others.Interfaces.RestaurantDataServerActions;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class RestaurantSaver implements RestaurantDataServerActions {
-    private final ArrayList<Restaurant> restaurants;
+    private ArrayList<Restaurant> restaurants;
     public RestaurantSaver(){
         restaurants= new ArrayList<>();
+    }
+    public void load(){
+        Statement statement = null;
+        try{
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ResultSet resultSet = null;
+        try{
+            resultSet = statement.executeQuery("select * from Restaurants;");
+            while(resultSet.next()){
+                restaurants.add(new Restaurant(resultSet.getString("rName"),
+                        resultSet.getString("id"), resultSet.getString("ownerID"),
+                        resultSet.getString("rType"),resultSet.getString("foods")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addRestaurant(Restaurant newRestaurant) {
@@ -45,7 +68,10 @@ public class RestaurantSaver implements RestaurantDataServerActions {
 
     @Override
     public Boolean doesRestaurantExist(String id) {
-        return null;
+        for(Restaurant restaurant :restaurants){
+            if(restaurant.giveID().equals(id))
+                return true;
+        }return false;
     }
 
     @Override
@@ -54,4 +80,38 @@ public class RestaurantSaver implements RestaurantDataServerActions {
     }
 
 
+    public void save() {
+        PreparedStatement statement = null;
+        try{
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
+            statement = connection.prepareStatement("insert into Restaurants(rName,id,ownerID,rType,foods)values (?,?,?,?,?)");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try{
+            statement.executeUpdate("truncate table Restaurants;");
+            for(Restaurant restaurant : restaurants){
+                statement.setString(1,restaurant.getName());
+                statement.setString(2,restaurant.giveID());
+                statement.setString(3,restaurant.giveOwnerID());
+                statement.setString(4,restaurant.giveType());
+                statement.setString(5,"");
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void giveFoods(ArrayList<Food>foods){
+        for(Restaurant restaurant : restaurants){
+            for(Food food:foods){
+                if(food.isInThisRestaurant(restaurant.giveID()))
+                    restaurant.addFood(food);
+            }
+        }
+    }
+
+    public ArrayList<Restaurant> give() {
+        return this.restaurants;
+    }
 }

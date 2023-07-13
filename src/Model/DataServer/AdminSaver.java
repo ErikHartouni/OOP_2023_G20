@@ -1,6 +1,7 @@
 package Model.DataServer;
 
 import Model.DataServer.IDHandler.ID;
+import Model.RestaurantClasses.Restaurant;
 import Model.Users.Admin;
 import Model.Users.User;
 import Model.Users.UserClasses.Massage;
@@ -87,5 +88,14 @@ public class AdminSaver {
                     admin.getMessageFromServer(m);
             }
         }
+    }
+    public void sendToAll(Restaurant restaurant){
+        for(Admin admin:admins){
+
+        }
+    }
+
+    public int giveNum() {
+        return this.admins.size();
     }
 }

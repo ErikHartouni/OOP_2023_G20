@@ -18,11 +18,14 @@ public class InputReceiver {
 
     public void run(){
         while(shallContinue){
+            try{
             order=scanner.nextLine();
             order = order.trim();
             if(order.equals("end"))
                 shallContinue=false;
-            controller.manage(order);
+            controller.manage(order);}catch (Exception e){
+                System.out.println("sth went wrong");e.printStackTrace();
+            }
         }
     }
     public String getYesOrNo(){

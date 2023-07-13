@@ -1,11 +1,13 @@
 package Model.Users;
 
 import Model.DataServer.IDHandler.ID;
+import Model.DataServer.IDHandler.IDServer;
 import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
 import Model.RestaurantClasses.Types.FoodType;
 import Model.RestaurantClasses.Types.RestaurantType;
+import Model.Users.UserClasses.CreditCard;
 import Others.Interfaces.RestaurantOwnerActions;
 
 import java.time.LocalDateTime;
@@ -17,11 +19,19 @@ public class User extends Person implements RestaurantOwnerActions {
     private ArrayList < Restaurant > myRestaurants;
     private int indexOfMyChosenRestaurant , indexOfMySelectedFood;
     private Restaurant myRestaurant;
-    public User(String userName , String passWord , String id , int credit , String message , String cart , String myRestaurant){
-        System.out.println(userName+passWord+id+credit);
+    /**
+     * for sql
+     **/
+    public User(String userName , String passWord , String id , int credit , String message , String cart , String myRestaurant, int loc){
         this.username=userName;
         this.password=passWord;
-
+        this.cartString=cart;
+        super.id= IDServer.toID(id);
+        super.creditCard=new CreditCard(credit);
+        super.cart=new ArrayList<>();orders = new ArrayList<>();
+        super.numberOfGraph=loc;
+        isAdmin=false; isPoster=false;
+        myRestaurants=new ArrayList<>();
     }
 
     public User(String username , String password , ID id){
@@ -31,6 +41,9 @@ public class User extends Person implements RestaurantOwnerActions {
         super.isAdmin=false;
         super.isPoster=false;
         myRestaurants = new ArrayList<>();
+        super.cart=new ArrayList<>();
+        super.creditCard=new CreditCard(0);
+        super.orders = new ArrayList<>();
     }
     public Boolean doesHaveThisRestaurant(String id){
         for(Restaurant restaurant:myRestaurants){
@@ -68,7 +81,7 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public RestaurantType showRestaurantType() {
-        return null;
+        return this.myRestaurant.showRestaurantType();
     }
 
     @Override
@@ -93,17 +106,17 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public void selectFood(String id) {
-
+        this.myRestaurant.selectFood(id);
     }
 
     @Override
     public void editMyRestaurantFoodName(String newName) {
-
+        this.myRestaurant.editFoodName(newName);
     }
 
     @Override
     public void editMyRestaurantFoodPrice(Integer newPrise) {
-
+        this.myRestaurant.editFoodPrice(newPrise);
     }
 
     @Override
@@ -115,6 +128,9 @@ public class User extends Person implements RestaurantOwnerActions {
     public void addFoodToMyRestaurant(String name, FoodType foodType , LocalTime time ,
                                       Integer price , Integer discountRate , ID foodID) {
         this.myRestaurant.addFood(name ,price,foodType,time,discountRate,foodID);
+    }public Food addNewFoodToMyRestaurant(String name, FoodType foodType , LocalTime time ,
+                                       Integer price , Integer discountRate , ID foodID) {
+        return  this.myRestaurant.addFood(name ,price,foodType,time,discountRate,foodID);
     }
 
     @Override
@@ -129,22 +145,22 @@ public class User extends Person implements RestaurantOwnerActions {
 
     @Override
     public void deactivateFood(String id) {
-
+        this.myRestaurant.deactivateFood(id);
     }
 
     @Override
     public void activateFood(String id) {
-
+        this.myRestaurant.activateFood(id);
     }
 
     @Override
     public Boolean doesFoodHaveDiscount() {
-        return null;
+        return this.myRestaurant.doesFoodHaveDiscount();
     }
 
     @Override
     public Boolean discountFood(Integer discount, LocalDateTime time) {
-        return null;
+        return this.myRestaurant.discountFood(discount,time);
     }
 
 
@@ -176,5 +192,9 @@ public class User extends Person implements RestaurantOwnerActions {
 
     public String giveMrRestaurantID() {
         return "";
+    }
+
+    public void setRestaurantLocation(int parseInt) {
+        this.myRestaurant.setLocation(parseInt);
     }
 }

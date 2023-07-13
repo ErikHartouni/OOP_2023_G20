@@ -7,7 +7,7 @@ public enum GlobalMassage implements EnumMassage {
     EMPTY("this part is empty"),
     END("ended successfully"),
     START("application started successfully!"),
-    STH_WENT_WRONG("something went wrong in loading database");
+    STH_WENT_WRONG("something went wrong in loading database"), WRONG_PLACE("you are in wrong place !!");
     final private String massage;
     GlobalMassage(String massage){
         this.massage=massage;

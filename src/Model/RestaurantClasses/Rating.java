@@ -11,7 +11,7 @@ public enum Rating {
     Rating(int rating){
         this.num=rating;
     }
-    int giveRating(){
+    public int giveRating(){
         return this.num;
     }
 }

@@ -23,7 +23,7 @@ public interface RestaurantActions {
     Boolean doesFoodNameExists(String name);
     void addFood(String name , Integer price);
 
-    void addFood(String name, Integer price, FoodType foodType,
+    Food addFood(String name, Integer price, FoodType foodType,
                  LocalTime time, Integer discountRate, ID foodID);
 
     Boolean canDeleteOrDeactivateFood(String id);
@@ -36,6 +36,8 @@ public interface RestaurantActions {
     void selectFood(String id);
     ArrayList<Comment> giveComments();
     void addComment(StringBuilder comment, ID id, Person sender);
+
+    void addComment(Comment comment);
 
     Boolean doesCommentExist(String id);
 

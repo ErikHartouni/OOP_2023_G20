@@ -11,7 +11,7 @@ public class Main {
         try{
             ActionManager.loadInformation();
         }catch (Exception e){
-            System.out.println(GlobalMassage.STH_WENT_WRONG);
+            System.out.println(GlobalMassage.STH_WENT_WRONG);e.printStackTrace();
             x=false;
         }
         if(x)

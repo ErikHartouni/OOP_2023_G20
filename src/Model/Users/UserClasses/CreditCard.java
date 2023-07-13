@@ -9,4 +9,11 @@ public class CreditCard {
         return this.money;
     }
 
+    public void add(int parseInt) {
+        money+=parseInt;
+    }
+
+    public boolean isEmpty() {
+        return money==0;
+    }
 }

@@ -11,6 +11,9 @@ public class ID {
     }
 
     public String show(){
-        return type.giveCode()+code;
+        return type.giveCode()+"_"+code;
+    }
+    public boolean equals(ID id){
+        return this.show().equals(id.show());
     }
 }

@@ -24,7 +24,8 @@ public class CommentServer {
             resultSet = statement.executeQuery("select * from Comment;");
             while(resultSet.next()){
                 comments.add(new Comment(resultSet.getString("id"),resultSet.getString("com"),
-                        resultSet.getString("senderID"),resultSet.getString("foodID")));
+                        resultSet.getString("senderID"),resultSet.getString("foodID"),
+                        resultSet.getString("theTime"),resultSet.getBoolean("edited")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,26 +36,32 @@ public class CommentServer {
         PreparedStatement statement = null;
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
-            statement = connection.prepareStatement("insert into Raiting (id,com,senderID,foodID)values (?,?,?,?)");
+            statement = connection.prepareStatement("insert into comment (id,com,senderID,foodID,theTime,edited)values (?,?,?,?,?,?)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         try{
-             statement.executeUpdate("truncate table Comment;");
+             statement.executeUpdate("truncate table comment;");
             for(Comment comment: comments){
                 statement.setString(1,comment.giveID());
                 statement.setString(2,comment.giveJustComment());
                 statement.setString(3,comment.getSenderIDAsString());
                 statement.setString(4,comment.giveFID());
+                statement.setString(5,comment.giveTime());
+                statement.setBoolean(6,comment.giveEdited());
                 statement.executeUpdate();
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public ArrayList<Comment> give() {
         return this.comments;
+    }
+
+    public void add(Comment comment1) {
+        this.comments.add(comment1);
     }
 }

@@ -1,5 +1,6 @@
 package Model.DataServer;
 
+import Model.DataServer.IDHandler.ID;
 import Model.RestaurantClasses.Rating;
 import Model.Users.Admin;
 
@@ -57,5 +58,8 @@ public class RatingServer {
 
     public ArrayList<String> give() {
         return this.ratings;
+    }
+    public void addRating(String restaurantID , ID personID , int rating){
+        this.ratings.add(restaurantID+" "+personID.show()+" "+rating);
     }
 }

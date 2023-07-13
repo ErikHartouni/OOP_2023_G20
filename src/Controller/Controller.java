@@ -47,6 +47,17 @@ public class Controller {
             case SUBMIT_RATING -> actionManager.submitRating(string);
             case ADD_TO_CART -> actionManager.addThisFoodToCart();
             case SHOW_CART -> actionManager.showMyCart();
+            case DELETE_FROM_CART -> actionManager.deleteFromCart(string);
+            case SET_LOCATION -> actionManager.setLocation(Integer.parseInt(string.split("\\s+")[3]));
+            case SHOW_CREDIT_CARD -> actionManager.showMyCredit();
+            case ADD_TO_CARD -> actionManager.addToCard(string);
+            case PURCHASE -> actionManager.purchase();
+            case SHOW_HISTORY -> actionManager.showHistory();
+            case CREATE_POST -> actionManager.createPostman(string);
+            case LOGIN_POST -> actionManager.loginPostman(string);
+            case GIVE_ACTIVE_ORDERS -> actionManager.showActiveOrders();
+            case SELECT_ORDER -> actionManager.selectOrder(string);
+            case SHOW_MY_ORDER -> actionManager.showMyPostOrder();
             case BACK -> actionManager.back();
             case END -> actionManager.end();
             case INVALID_ORDER -> actionManager.invalid();

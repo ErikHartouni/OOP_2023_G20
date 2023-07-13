@@ -1,8 +1,5 @@
 package Controller;
 
-import Model.MainBrain.ActionManager;
-
-import javax.swing.*;
 import java.util.regex.Pattern;
 
 public enum InputType {
@@ -35,8 +32,20 @@ public enum InputType {
     EDIT_COMMENT(  "^EDIT\\s+COMMENT\\s+[!-z]+$" ),
     DISPLAY_RATING(  "^DISPLAY\\s+RATING$" ),
     SUBMIT_RATING("^SUBMIT\\s+RATING\\s+[A-z]+$" ),
-    ADD_TO_CART("^ADD\\s+THIS\\s+FOOD\\s+TO\\s+CHART$"),
+    ADD_TO_CART("^ADD\\s+THIS\\s+FOOD\\s+TO\\s+CART$"),
     SHOW_CART("^SHOW\\s+CART"),
+    DELETE_FROM_CART("^DELETE\\s+[!-z]+\\s+from\\s+cart$"),
+    SET_LOCATION("^SET\\s+LOCATION\\s+TO\\s+[0-9]+$"),
+    SHOW_CREDIT_CARD("^SHOW\\s+MY\\s+CREDIT$"),
+    ADD_TO_CARD("^ADD\\s+[0-9\\.]+\\s+TO\\s+MY\\s+CARD$"),
+    PURCHASE("^PURCHASE\\s+ITEMS$"),
+    SHOW_HISTORY("^SHOW\\s+HISTORY$"),
+    CREATE_POST("^create\\s+postman\\s+[!-z]+\\s+[!-z]+$"),
+    LOGIN_POST("login\\s+postman\\s+[!-z]+\\s+[!-z]+"),
+    GIVE_ACTIVE_ORDERS("^five\\s+active\\s+orders$"),
+    SELECT_ORDER("^select\\s+order\\s+[!-z]+$"),
+    SHOW_MY_ORDER("^show\\s+my\\s+order$"),
+    SHOW_ALL_RESTAURANTS("^show\\s+all\\s+restaurants#"),
     BACK("^BACK$"),
     END("^END$") , INVALID_ORDER;
 

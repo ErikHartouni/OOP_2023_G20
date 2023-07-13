@@ -1,5 +1,6 @@
 package Model.DataServer;
 
+import Model.RestaurantClasses.Comment;
 import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
 import Model.Users.User;
@@ -27,9 +28,16 @@ public class RestaurantSaver implements RestaurantDataServerActions {
         try{
             resultSet = statement.executeQuery("select * from Restaurants;");
             while(resultSet.next()){
+                ArrayList <Integer> integers = new ArrayList<>();
+                integers.add(resultSet.getInt("veryGood"));
+                integers.add(resultSet.getInt("good"));
+                integers.add(resultSet.getInt("medum"));
+                integers.add(resultSet.getInt("bad"));
+                integers.add(resultSet.getInt("veryBad"));
                 restaurants.add(new Restaurant(resultSet.getString("rName"),
                         resultSet.getString("id"), resultSet.getString("ownerID"),
-                        resultSet.getString("rType"),resultSet.getString("foods")));
+                        resultSet.getString("rType"),resultSet.getString("foods"),integers,
+                        resultSet.getInt("loc")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -76,7 +84,10 @@ public class RestaurantSaver implements RestaurantDataServerActions {
 
     @Override
     public Restaurant giveRestaurant(String id) {
-        return null;
+        for(Restaurant restaurant : restaurants){
+            if(restaurant.giveID().equals(id))
+                return this.restaurants.get(restaurants.indexOf(restaurant));
+        }return null;
     }
 
 
@@ -84,18 +95,26 @@ public class RestaurantSaver implements RestaurantDataServerActions {
         PreparedStatement statement = null;
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
-            statement = connection.prepareStatement("insert into Restaurants(rName,id,ownerID,rType,foods)values (?,?,?,?,?)");
+            statement = connection.prepareStatement("insert into Restaurants(rName,id,ownerID,rType,foods," +
+                    "veryGood,good,medum,bad,veryBad,loc)values (?,?,?,?,?,?,?,?,?,?,?)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         try{
             statement.executeUpdate("truncate table Restaurants;");
             for(Restaurant restaurant : restaurants){
+                ArrayList <Integer> ints = restaurant.giveRating();
                 statement.setString(1,restaurant.getName());
                 statement.setString(2,restaurant.giveID());
                 statement.setString(3,restaurant.giveOwnerID());
                 statement.setString(4,restaurant.giveType());
                 statement.setString(5,"");
+                statement.setInt(6,ints.get(0));
+                statement.setInt(7,ints.get(1));
+                statement.setInt(8,ints.get(2));
+                statement.setInt(9,ints.get(3));
+                statement.setInt(10,ints.get(4));
+                statement.setInt(11,restaurant.givePose());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -113,5 +132,38 @@ public class RestaurantSaver implements RestaurantDataServerActions {
 
     public ArrayList<Restaurant> give() {
         return this.restaurants;
+    }
+
+    public ArrayList<Integer> giveRestaurants(ArrayList<String> ids) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        for(String str : ids){
+            for(Restaurant restaurant :restaurants){
+                if(restaurant.giveID().equals(str))
+                    ans.add(restaurant.givePose());
+            }
+        }return ans;
+    }
+
+    public int giveNum() {
+        return this.restaurants.size();
+    }
+
+    public void geiveRatings(ArrayList<String> give) {
+        for(String str : give){
+            String [] strings = str.split("\\s+");
+            for(Restaurant restaurant : restaurants){
+                if(strings[0].equals(restaurant.giveID()))
+                    restaurant.appendRating(Integer.parseInt(strings[2]));
+            }
+        }
+    }
+
+    public void giveComments(ArrayList<Comment> give) {
+        for(Comment comment : give){
+            for(Restaurant restaurant : restaurants){
+                if(comment.giveFID().equals(restaurant.giveID()))
+                    restaurant.addComment(comment);
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ public enum RestaurantMassages implements EnumMassage {
     BUIING_YOURSELF("you cannot buy goods from your own restaurant !"),
     RESTAURANT_CREATED("restaurant created"),
     FOOD_ADDED("food added"),
-    RATING_YOURSELF("you cannot rate your own restaurant !!");
+    RATING_YOURSELF("you cannot rate your own restaurant !!"), LOC_SET("location set"), RATED("rating set");
 
     final private String massage;
     RestaurantMassages(String massage){

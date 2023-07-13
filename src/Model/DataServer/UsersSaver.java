@@ -15,17 +15,17 @@ import java.util.HashMap;
 
 public class UsersSaver {
     private   ArrayList<User> userArrayList;
-    private   HashMap<String , Integer> userMap;
     private   int numberOfUsers;
     public  UsersSaver(){
-        userMap = new HashMap<>();
         userArrayList = new ArrayList<>();
         numberOfUsers=0;
     }
 
     public   int userIndex(String name){
-        if(userMap.containsKey(name))
-            return userMap.get(name);
+        for(int i=0;i<userArrayList.size();i++){
+            if(userArrayList.get(i).giveName().equals(name))
+                return i;
+        }
         return -1;
     }
     public   User giveUser(int index){
@@ -33,10 +33,12 @@ public class UsersSaver {
     }
     public   void createUser(String username , String password , ID id){
         userArrayList.add(new User(username,password,id));
-        userMap.put(username,numberOfUsers++);
     }
     public   Boolean checkPassword(String username , String password){
-        return userArrayList.get(userMap.get(username)).doesPasswordMatch(password);
+        for(int i=0;i<userArrayList.size();i++){
+            if(userArrayList.get(i).giveName().equals(username))
+                return userArrayList.get(i).doesPasswordMatch(password);
+        }return null;
     }
 
     public   void getItems(){
@@ -53,10 +55,10 @@ public class UsersSaver {
             while(resultSet.next()){
                 userArrayList.add(new User(resultSet.getString("userName"),resultSet.getString("thePassWord"),
                         resultSet.getString("id"),resultSet.getInt("creditCard"),resultSet.getString("massages"),
-                        resultSet.getString("cart"),resultSet.getString("myRestaurants")));
+                        resultSet.getString("cart"),resultSet.getString("myRestaurants"),resultSet.getInt("location")));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -65,7 +67,7 @@ public class UsersSaver {
         PreparedStatement statement = null;
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
-            statement = connection.prepareStatement("insert into Users(userName,thePassWord,id,creditCard,massages,cart,myRestaurants)values (?,?,?,?,?,?,?);");
+            statement = connection.prepareStatement("insert into Users(userName,thePassWord,id,creditCard,massages,cart,myRestaurants,location)values (?,?,?,?,?,?,?,?);");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +81,7 @@ public class UsersSaver {
                 statement.setString(5,"");
                 statement.setString(6,user.giveByuCart());
                 statement.setString(7,"");
+                statement.setInt(8,user.getLoc());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -96,7 +99,7 @@ public class UsersSaver {
     public void giveMyRestaurants(ArrayList<Restaurant> restaurants){
         for(User user:userArrayList){
             for(Restaurant restaurant :restaurants){
-                if(restaurant.isOwner(user.giveID()))
+                if(restaurant.giveOwnerID().equals(user.giveID().show()))
                     user.createRestaurant(restaurant);
             }
         }
@@ -111,4 +114,7 @@ public class UsersSaver {
         }
     }
 
+    public int giveNum() {
+        return this.userArrayList.size();
+    }
 }

@@ -17,7 +17,9 @@ public enum UserMassages implements EnumMassage {
     FOOD_NAME_REPETITIOUS("food name already exists in this restaurant"),
     NO_SELECTED_RESTAURANT("you have not selected a restaurant yet"),
     COMMENT_ADDED("comment added"),
-    SAY_COMMENT("enter your comment:\n\t");
+    SAY_COMMENT("enter your comment:\n\t"), LOC_SET("location set"),
+    CARD_ADDED("money added to card"), EMPTY_CART("you dont have enough credits !!"),
+    NO_LOC("set your location first !"), NOT_POSTMAN("you are not postman");
 
     final private String massage;
     UserMassages(String massage){

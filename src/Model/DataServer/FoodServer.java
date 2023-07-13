@@ -26,7 +26,8 @@ public class FoodServer {
             while(resultSet.next()){
                 foods.add(new Food(resultSet.getString("fName"),resultSet.getString("fType"),
                         resultSet.getString("id"),resultSet.getInt("discount"),resultSet.getInt("price"),
-                        resultSet.getString("TTM")));
+                        resultSet.getString("TTM"),resultSet.getString("restID"),resultSet.getBoolean("activation"),
+                        resultSet.getBoolean("deleted")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -44,14 +45,15 @@ public class FoodServer {
             }
         }
     }
-    public void addFood(){
-
+    public void addFood(Food food){
+        this.foods.add(food);
     }
     public void save(){
         PreparedStatement statement = null;
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/oop_snap_food","root","erik7567") ;
-            statement = connection.prepareStatement("insert into Raiting (fName,fType,id,discount,price,TTM)values (?,?,?,?,?)");
+            statement = connection.prepareStatement("insert into food (fName,fType,id,discount,price,TTM,restID," +
+                    "activation,deleted)values (?,?,?,?,?,?,?,?,?)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,14 +66,21 @@ public class FoodServer {
                 statement.setInt(4,food.getDiscount());
                 statement.setInt(5,food.getPrice());
                 statement.setString(6,food.getTTM());
+                statement.setString(7,food.giveRestaurantID());
+                statement.setBoolean(8,food.isActive());
+                statement.setBoolean(9,food.isDeleted());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     public ArrayList<Food>give(){
         return this.foods;
+    }
+
+    public int giveNum() {
+        return this.foods.size();
     }
 }

@@ -1,10 +1,13 @@
 package Model.RestaurantClasses;
 
 import Model.DataServer.IDHandler.ID;
+import Model.DataServer.IDHandler.IDServer;
 import Model.RestaurantClasses.Types.FoodType;
 import Model.Users.Person;
 import Others.Interfaces.FoodActions;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -12,20 +15,30 @@ public class Food implements FoodActions {
     private FoodType foodType;
     private String foodName;
     private LocalTime timeToMake;
+    private LocalDateTime discountTime;
     private Integer price, G , M , B , VB , discountRate; //G: good , VB : very bad
     private ID foodID , restaurantID;
-    private Boolean discount, activation;//true if active
+    private Boolean discount, activation,deleted;//true if active
     private ArrayList<Comment> comments;
     private ArrayList<Rating>ratings;
-    public Food(String name, FoodType foodType , LocalTime time , Integer price , Integer discountRate , ID foodID){
+    public Food(String name, FoodType foodType , LocalTime time , Integer price , Integer discountRate , ID foodID, ID restaurantID){
         this.foodName = name ; this.foodType=foodType ; this.timeToMake = time ; this.price = price;
-        this.discountRate = discountRate ; this.foodID = foodID;this.activation=true;
+        this.discountRate = discountRate ; this.foodID = foodID;this.activation=true;this.restaurantID=restaurantID;
+        this.deleted=false;
     }
 
     public Food(Food food) {
     }
 
-    public Food(String fName, String fType, String id, int discount, int price, String ttm) {
+    public Food(String fName, String fType, String id, int discount, int price, String ttm, String restaurantID,boolean activation,boolean deleted) {
+        this.foodName=fName;
+        this.foodType=FoodType.valueOf(fType);
+        this.foodID= IDServer.toID(id);
+        this.discountRate=discount;
+        this.price=price;this.deleted=deleted;
+        this.timeToMake=LocalTime.parse(ttm);
+        this.restaurantID=IDServer.toID(restaurantID);
+        this.activation=activation;
     }
     public void rate(int i){
 
@@ -47,7 +60,7 @@ public class Food implements FoodActions {
 
     @Override
     public Boolean doesHaveDiscount() {
-        return this.discount;
+        return discountRate!=0;
     }
 
     @Override
@@ -58,6 +71,14 @@ public class Food implements FoodActions {
     @Override
     public void setDiscount(int discount) {
 
+    }
+
+
+    public Boolean setDiscount(int discount , LocalDateTime time) {
+        if(discount==0) {
+            this.discountRate = discount;
+            this.discountTime = time;return true;
+        }return false;
     }
 
     @Override
@@ -125,5 +146,15 @@ public class Food implements FoodActions {
     }
     public Boolean isInThisRestaurant(String id){
         return id.equals(restaurantID.show());
+    }
+    public String giveRestaurantID(){
+        return this.restaurantID.show();
+    }
+    public String toString(){
+        return foodName+" "+foodID+" "+price;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted();
     }
 }

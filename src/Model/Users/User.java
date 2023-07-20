@@ -32,6 +32,7 @@ public class User extends Person implements RestaurantOwnerActions {
         super.numberOfGraph=loc;
         isAdmin=false; isPoster=false;
         myRestaurants=new ArrayList<>();
+        super.shoppingCartSaver=message;
     }
 
     public User(String username , String password , ID id){
@@ -196,5 +197,9 @@ public class User extends Person implements RestaurantOwnerActions {
 
     public void setRestaurantLocation(int parseInt) {
         this.myRestaurant.setLocation(parseInt);
+    }
+
+    public String printMyRestaurant() {
+        return this.myRestaurant.print();
     }
 }

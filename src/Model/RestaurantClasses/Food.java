@@ -155,6 +155,6 @@ public class Food implements FoodActions {
     }
 
     public boolean isDeleted() {
-        return isDeleted();
+        return deleted;
     }
 }

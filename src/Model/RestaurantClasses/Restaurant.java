@@ -287,4 +287,6 @@ public class Restaurant implements RestaurantActions {
     public void appendRating(int parseInt) {
         ratings.add(parseInt-1,ratings.get(parseInt-1)+1);
     }
+
+
 }

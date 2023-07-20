@@ -25,6 +25,7 @@ public enum InputType {
     DISCOUNT_FOOD(  "^ADD\\s+DISCOUNT\\s+[0-9]+\\s+[0-9]+:[0-9]+:[0-9]+:[0-9]+:$" ),
     SEARCH_RESTAURANT(  "^SEARCH\\s+RESTAURANT\\s+[A-z]+$" ),
     SELECT_RESTAURANT(  "^SELECT\\s+RESTAURANT\\s+[!-z]+$" ),
+    SHOW_RESTAURANT_DETAILS("^show\\s+restaurant\\s+details$"),
     SHOW_MENU(  "^SHOW\\s+MENU$" ),
     SELECT_FOOD(  "^SELECT\\s+FOOD\\s+[!-z]+$" ),
     DISPLAY_COMMENTS(  "^DISPLAY\\s+COMMENTS$" ),

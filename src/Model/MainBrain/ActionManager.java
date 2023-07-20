@@ -79,8 +79,10 @@ public class ActionManager {
         restaurantsData.giveFoods(foodServer.give());
         restaurantsData.geiveRatings(ratingServer.give());
         usersData.giveMyRestaurants(restaurantsData.give());
+        usersData.giveShoppingCart(foodServer.give());
         idServer=new IDServer(foodServer.giveNum(),usersData.giveNum(),restaurantsData.giveNum(),
                 adminsData.giveNum(),postmanData.giveNum(),orderServer.giveNum());
+
     }
 
     //constructor
@@ -446,7 +448,7 @@ public class ActionManager {
         if(onlinePlace!=OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
             if(onlinePlace==OnlinePlace.OUT_RESTAURANT){
                 viewCenter.showArraylist(outerRestaurant.giveFoodsForUser());
-            }viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
+            }else viewCenter.cout(UserMassages.NOT_IN_RESTAURANT_MENU);
         }else viewCenter.cout(UserMassages.NOT_LOGGED_IN);
     }
     public void selectFood(String string){
@@ -696,5 +698,16 @@ public class ActionManager {
         }if(person.isAdmin()|| person.isUser()){
             viewCenter.cout(UserMassages.NOT_POSTMAN);return;
         }viewCenter.cArray(((PostMan) person).giveActiveOrder().giveRoot());
+    }
+
+    public void showRestaurantDetails() {
+        System.out.println("sth");
+        if(onlinePlace==OnlinePlace.LOGOUT_LOGIN_CREATION_MENU){
+            viewCenter.cout(UserMassages.NOT_LOGGED_IN);return;
+        }if(onlinePlace==OnlinePlace.OUT_RESTAURANT ){
+            viewCenter.cout(this.outerRestaurant.print());return;
+        }if(onlinePlace==OnlinePlace.MY_RESTAURANT_MENU){
+            viewCenter.cout(((User)person).printMyRestaurant());return;
+        }viewCenter.cout("in wrong place");
     }
 }

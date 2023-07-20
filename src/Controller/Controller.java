@@ -39,6 +39,7 @@ public class Controller {
             case SEARCH_RESTAURANT -> actionManager.searchRestaurant(string);
             case SELECT_RESTAURANT -> actionManager.selectRestaurant(string);
             case SHOW_MENU -> actionManager.showMenu();
+            case SHOW_RESTAURANT_DETAILS -> actionManager.showRestaurantDetails();
             case SELECT_FOOD -> actionManager.selectFood(string);
             case DISPLAY_COMMENTS -> actionManager.displayComments();
             case ADD_COMMENT -> actionManager.addComment();

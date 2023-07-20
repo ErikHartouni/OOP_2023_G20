@@ -18,7 +18,7 @@ public abstract class Person implements UserActions {
     protected ArrayList<Food> cart;
     protected Boolean isAdmin , isPoster;
     protected ID id;
-    protected String cartString;
+    protected String cartString,shoppingCartSaver;
     protected ArrayList<Order> orders;
 
 
@@ -141,4 +141,20 @@ public abstract class Person implements UserActions {
         orders.add(new Order(cart,this.id,orderID,root));
         cart=new ArrayList<>();
     }
+    public String giveShoppingCart(){
+        String str="" ;
+        for(Food food : cart)
+            str+=food.getID();
+        return str;
+    }
+    public void reloadShoppingCart(ArrayList<Food>foods){
+        String[] ids = shoppingCartSaver.split("#");
+        for(String str : ids){
+            for(Food food : foods){
+                if(food.getID().equals(str))
+                    this.addToCart(food);
+            }
+        }
+    }
+
 }

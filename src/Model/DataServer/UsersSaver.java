@@ -3,6 +3,7 @@ package Model.DataServer;
 import Model.DataServer.IDHandler.ID;
 import Model.DataServer.IDHandler.TypeOfID;
 import Model.RestaurantClasses.Comment;
+import Model.RestaurantClasses.Food;
 import Model.RestaurantClasses.Restaurant;
 import Model.Users.User;
 import Model.Users.UserClasses.Massage;
@@ -78,7 +79,7 @@ public class UsersSaver {
                 statement.setString(2,user.givePass());
                 statement.setString(3,user.giveID().show());
                 statement.setInt(4,user.giveCart());
-                statement.setString(5,"");
+                statement.setString(5,user.giveShoppingCart());
                 statement.setString(6,user.giveByuCart());
                 statement.setString(7,"");
                 statement.setInt(8,user.getLoc());
@@ -116,5 +117,11 @@ public class UsersSaver {
 
     public int giveNum() {
         return this.userArrayList.size();
+    }
+
+    public void giveShoppingCart(ArrayList<Food>foods) {
+        for(User user :userArrayList){
+            user.reloadShoppingCart(foods);
+        }
     }
 }

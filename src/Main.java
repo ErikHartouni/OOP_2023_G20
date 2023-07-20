@@ -20,7 +20,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         InputReceiver inputReceiver = new InputReceiver(scanner , true);
-        inputReceiver.run();
-        ActionManager.saveInformation();
+        inputReceiver.run();boolean x=true;
+        try{
+        ActionManager.saveInformation();}
+        catch (Exception e){
+            System.out.println("sth went wrong in saving info");e.printStackTrace();x=false;
+        }if(x) System.out.print("saved successfully !!!");
+
     }
 }

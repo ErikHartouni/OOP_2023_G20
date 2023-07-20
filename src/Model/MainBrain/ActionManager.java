@@ -609,15 +609,16 @@ public class ActionManager {
             viewCenter.cout(UserMassages.EMPTY_CART);return;
         }if(!person.doesHaveLoc()){
             viewCenter.cout(UserMassages.NO_LOC);return;
-        }person.bought(getRoot(person.puchase(),person.getLoc()),idServer.createID(TypeOfID.ORDER));
-        viewCenter.cArray(getRoot(person.puchase(),person.getLoc()));
+        }ArrayList<ArrayList<Integer>> root = getRoot(person.puchase(),person.getLoc());
+        person.bought(root,idServer.createID(TypeOfID.ORDER));
+        viewCenter.cArray(root);
     }
     private ArrayList<ArrayList<Integer>> getRoot(ArrayList<String> ids , Integer destination){
         ArrayList<Integer> integers = restaurantsData.giveRestaurants(ids);
         ArrayList<ArrayList<Integer>> root = new ArrayList<>();
         for(int i= 0; i<integers.size()-1;i++){
-            root.add(locationServer.showTheShortestWay(integers.get(i),integers.get(i+1)));
-        }root.add(locationServer.showTheShortestWay(integers.get(integers.size()-1),destination));
+            root.add(locationServer.showTheShortestWay(integers.get(i)+1,integers.get(i+1)+1));
+        }root.add(locationServer.showTheShortestWay(integers.get(integers.size()-1)+1,destination+1));
         return root;
     }
 

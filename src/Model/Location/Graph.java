@@ -15,7 +15,7 @@ public class Graph {
             vertices.add(new Vertex());
     }
     public Vertex get(int i){
-        return this.vertices.get(i-1);
+        return this.vertices.get(i+1);
     }
     public void setLine(int i , int j , int d){
         vertices.get(i-1).addToNeighbour(new ComplexNumber(j-1,d));

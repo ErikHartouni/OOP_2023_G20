@@ -70,6 +70,7 @@ public class Operations {
             if (onHold.size() > 0) {
                 Operations.NeighbourFinder(graph, Operations.onHoldChooser(onHold), onHold, analysed);
             }
+
         }
         return analysed;
     }
@@ -81,14 +82,18 @@ public class Operations {
         int vertex = Operations.analysedMemberFinder(analysed,destination).getVIndex();
         path.add(vertex);
         int distance = Operations.analysedMemberFinder(analysed,destination).getDistance();
-        while (!path.contains(origin)) {
 
+        while (!path.contains(origin)) {
+            System.out.println("sth");
+            System.out.println(origin);
+            System.out.println(path);
             int distanceCheck;
             for (int j = 0; j < graph.get(vertex).size(); j++) {
                 distanceCheck = distance - graph.get(vertex).get(j).getDistance();
                 ComplexNumber complexNumber = Operations.analysedMemberFinder(analysed, graph.get(vertex).get(j).getVIndex());
                 if(complexNumber!=null) {
                     if (distanceCheck == complexNumber.getDistance()) {
+                        System.out.println(complexNumber.getVIndex());
                         path.add(complexNumber.getVIndex());
                         vertex = complexNumber.getVIndex();
                         distance = complexNumber.getDistance();
